@@ -1,0 +1,95 @@
+//
+//  SpecialButtonType.swift
+//  Inuit
+//
+//  Created by Roman Kavinskyi on 8/23/22.
+//
+
+import Foundation
+import UIKit
+
+enum SpecialButtonType {
+    
+    case sectionOne(onTap: () -> Void),
+         sectionTwo(onTap: () -> Void),
+         sectionThree(onTap: () -> Void),
+         sectionFour(onTap: () -> Void),
+         numericSection(onTap: () -> Void),
+         tab(onTap: () -> Void),
+         arrowRight(onTap: () -> Void),
+         arrowLeft(onTap: () -> Void),
+         delete(onTap: () -> Void),
+         syllables(onTap: () -> Void),
+         twoDots(onTap: () -> Void),
+         enter(onTap: () -> Void),
+         space(onTap: () -> Void),
+         changeLanguage(onTap: () -> Void)
+    
+    var image: UIImage? {
+        switch self {
+        case .sectionOne:       return Images.arrowDown
+        case .sectionTwo:       return Images.arrowUp
+        case .sectionThree:     return Images.arrowRight
+        case .sectionFour:      return Images.arrowLeft
+        case .tab:              return Images.tab
+        case .arrowRight:       return Images.forward
+        case .arrowLeft:        return Images.backwards
+        case .delete:           return Images.backspace
+        case .changeLanguage:   return Images.world
+        default:                return nil
+        }
+    }
+    
+    var title: String? {
+        switch self {
+        case .numericSection:   return "1"
+        case .syllables:        return "•"
+        case .twoDots:          return "••"
+        case .enter:            return "ᐊᑌ"
+        case .space:            return "ᐅᖓᓯᓪᓕᑎᖅ"
+        default:                return nil
+        }
+    }
+    
+    var imageColor: UIColor {
+        if case .changeLanguage = self  { return .appGray }
+        if case .arrowLeft = self       { return .label }
+        if case .arrowRight = self      { return .label }
+        if case .tab = self             { return .label }
+        if case .delete = self          { return .appGray }
+        return .white
+    }
+    
+    var hasColoredBackground: Bool {
+        switch self {
+        case .sectionOne, .sectionTwo, .sectionThree, .sectionFour, .numericSection, .tab, .arrowRight, .arrowLeft: return true
+        default: return false
+        }
+    }
+    
+    var hasArrow: Bool {
+        if case .arrowLeft  = self { return true }
+        if case .arrowRight = self { return true }
+        return false
+    }
+    
+    func action() {
+        switch self {
+        case .sectionOne(let onTap),
+                .sectionTwo(let onTap),
+                .sectionThree(let onTap),
+                .sectionFour(let onTap),
+                .numericSection(let onTap),
+                .tab(let onTap),
+                .arrowRight(let onTap),
+                .arrowLeft(let onTap),
+                .delete(let onTap),
+                .syllables(let onTap),
+                .twoDots(let onTap),
+                .enter(let onTap),
+                .space(let onTap),
+                .changeLanguage(let onTap):
+            onTap()
+        }
+    }
+}

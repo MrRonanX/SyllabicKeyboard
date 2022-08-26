@@ -38,10 +38,10 @@ extension UIColor {
                             alpha: 1.0)
     }
     
-    static var appBlue      = colorFromHexValue("1a95b7")
-    static var appOrange    = colorFromHexValue("e66523")
-    static var appGreen     = colorFromHexValue("85c441")
-    static var appYellow    = colorFromHexValue("efcc41")
+//    static var appBlue      = colorFromHexValue("1a95b7")
+//    static var appOrange    = colorFromHexValue("e66523")
+//    static var appGreen     = colorFromHexValue("85c441")
+//    static var appYellow    = colorFromHexValue("efcc41")
     
     static let appGray : UIColor = {
         return UIColor { traitCollection -> UIColor in
@@ -59,6 +59,50 @@ extension UIColor {
                 return rgbColor(red: 106, green: 106, blue: 106)
             } else {
                 return .white
+            }
+        }
+    }()
+    
+    static var systemBlack: UIColor = {
+        colorFromHexValue("121212")
+    }()
+    
+    static var appBlue: UIColor = {
+        return UIColor { traitCollection -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return colorFromHexValue("2a8ca7")
+            } else {
+                return colorFromHexValue("1a95b7")
+            }
+        }
+    }()
+    
+    static var appOrange: UIColor = {
+        return UIColor { traitCollection -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return colorFromHexValue("d36b37")
+            } else {
+                return colorFromHexValue("e66523")
+            }
+        }
+    }()
+    
+    static var appGreen: UIColor = {
+        return UIColor { traitCollection -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return colorFromHexValue("84b74e")
+            } else {
+                return colorFromHexValue("85c441")
+            }
+        }
+    }()
+    
+    static var appYellow: UIColor = {
+        return UIColor { traitCollection -> UIColor in
+            if traitCollection.userInterfaceStyle == .dark {
+                return colorFromHexValue("dec252")
+            } else {
+                return colorFromHexValue("efcc41")
             }
         }
     }()

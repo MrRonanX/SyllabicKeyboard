@@ -186,7 +186,7 @@ final class KeyboardViewController: UIInputViewController {
         !(twoDotsActive && selectedKeyboardType != .numericSection)
     }
     
-    private var rowHasTabButton: Bool {
+    private var rowHasArrows: Bool {
         selectedKeyboardType == .numericSection && !twoDotsActive && !consonantsActive
     }
     
@@ -197,12 +197,6 @@ final class KeyboardViewController: UIInputViewController {
         let rowView             = UIStackView(arrangedSubviews: [firstSectionButton, rowKeys])
         rowView.distribution    = .fillProportionally
         rowView.spacing         = keySpacing
-        
-        if rowHasTabButton {
-            let tabButton = createAccessoryButton(type: .tab(onTap: tabButtonTapped))
-            rowView.addArrangedSubview(tabButton)
-        }
-       
         
         guard rowHasConsonants else { return rowView }
         
@@ -220,7 +214,7 @@ final class KeyboardViewController: UIInputViewController {
         rowView.distribution    = .fillProportionally
         rowView.spacing         = keySpacing
         
-        if rowHasTabButton {
+        if rowHasArrows {
             let leftArrow  = createAccessoryButton(type: .arrowLeft(onTap: arrowLeftTapped))
             let rightArrow = createAccessoryButton(type: .arrowRight(onTap: arrowRightTapped))
             rowView.addArrangedSubview(leftArrow)
@@ -336,9 +330,6 @@ final class KeyboardViewController: UIInputViewController {
             
             if case .delete = type {
                 button.pushToRight(image)
-                
-            } else if case .tab = type {
-                button.resizeRight(with: buttonWidth)
 
             } else if type.hasArrow {
                 button.resizeImageView(with: buttonWidth)
@@ -351,7 +342,7 @@ final class KeyboardViewController: UIInputViewController {
         }
 
         switch type {
-        case .tab, .delete, .enter, .space:
+        case .delete, .enter, .space:
             var multiplier = 2.0
             if case .space = type {
                 let constant: CGFloat = isIpad || DeviceTypes.olderIphone ? 2 : 3
@@ -414,11 +405,6 @@ final class KeyboardViewController: UIInputViewController {
         resetState()
         playSound()
         selectedKeyboardType = .numericSection
-    }
-    
-    private func tabButtonTapped() {
-        playSound()
-        textDocumentProxy.insertText("\t")
     }
     
     private func arrowRightTapped() {

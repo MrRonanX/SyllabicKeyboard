@@ -17,7 +17,7 @@ enum KeyboardType {
         case .sectionTwo:       return ["ᐃ", "ᐱ", "ᑎ", "ᑭ", "ᒋ", "ᒥ", "ᓂ"]
         case .sectionThree:     return ["ᐅ", "ᐳ", "ᑐ", "ᑯ", "ᒍ", "ᒧ", "ᓄ"]
         case .sectionFour:      return ["ᐊ", "ᐸ", "ᑕ", "ᑲ", "ᒐ", "ᒪ", "ᓇ"]
-        case .numericSection:   return ["0", "1", "2", "3", "4"]
+        case .numericSection:   return ["0", "1", "2", "3", "4", "$", "¢"]
         }
     }
 
@@ -63,7 +63,7 @@ enum KeyboardType {
         case .sectionTwo:       return thirdRowKeys
         case .sectionThree:     return thirdRowKeys
         case .sectionFour:      return ["ᖡ", "ᖣ", "ᖥ", ".", ",", "?",]
-        case .numericSection:   return ["_", "^", "\\", "$", "¢", "@"]
+        case .numericSection:   return ["_", "^", "\\", "√", "π", "@"]
         }
     }
     
@@ -75,7 +75,7 @@ enum KeyboardType {
     
     var doubleDotsSecondRow: [String] {
         let generic = ["ᔅ", "ᓪ", "ᔾ", "ᕝ", "ᕐ", "ᖅ", "ᖕ", "ᖦ"]
-        let numeric = ["{", "}", "#", ";", ":", "'", #"""#]
+        let numeric = ["{", "}", "#", "cm", "km", "'", #"""#]
         return self == .numericSection ? numeric : generic
     }
     
@@ -88,7 +88,7 @@ enum KeyboardType {
 
     var backgroundColor: UIColor {
         switch self {
-        case .sectionOne:       return .black
+        case .sectionOne:       return .systemBlack
         case .sectionTwo:       return .appBlue
         case .sectionThree:     return .appOrange
         case .sectionFour:      return .appGreen
@@ -97,7 +97,7 @@ enum KeyboardType {
     }
     
     var foregroundColor: UIColor {
-        if self == .numericSection { return .label }
+        if self == .numericSection { return .black }
         return .white
     }
     

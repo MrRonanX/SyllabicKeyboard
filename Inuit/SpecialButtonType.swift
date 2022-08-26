@@ -15,7 +15,6 @@ enum SpecialButtonType {
          sectionThree(onTap: () -> Void),
          sectionFour(onTap: () -> Void),
          numericSection(onTap: () -> Void),
-         tab(onTap: () -> Void),
          arrowRight(onTap: () -> Void),
          arrowLeft(onTap: () -> Void),
          delete(onTap: () -> Void),
@@ -31,7 +30,6 @@ enum SpecialButtonType {
         case .sectionTwo:       return Images.arrowUp
         case .sectionThree:     return Images.arrowRight
         case .sectionFour:      return Images.arrowLeft
-        case .tab:              return Images.tab
         case .arrowRight:       return Images.forward
         case .arrowLeft:        return Images.backwards
         case .delete:           return Images.backspace
@@ -53,16 +51,15 @@ enum SpecialButtonType {
     
     var imageColor: UIColor {
         if case .changeLanguage = self  { return .appGray }
-        if case .arrowLeft = self       { return .label }
-        if case .arrowRight = self      { return .label }
-        if case .tab = self             { return .label }
+        if case .arrowLeft = self       { return .black }
+        if case .arrowRight = self      { return .black }
         if case .delete = self          { return .appGray }
         return .white
     }
     
     var hasColoredBackground: Bool {
         switch self {
-        case .sectionOne, .sectionTwo, .sectionThree, .sectionFour, .numericSection, .tab, .arrowRight, .arrowLeft: return true
+        case .sectionOne, .sectionTwo, .sectionThree, .sectionFour, .numericSection, .arrowRight, .arrowLeft: return true
         default: return false
         }
     }
@@ -80,7 +77,6 @@ enum SpecialButtonType {
                 .sectionThree(let onTap),
                 .sectionFour(let onTap),
                 .numericSection(let onTap),
-                .tab(let onTap),
                 .arrowRight(let onTap),
                 .arrowLeft(let onTap),
                 .delete(let onTap),

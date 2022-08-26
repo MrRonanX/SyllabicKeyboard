@@ -13,7 +13,7 @@ enum Localization {
     var mainTitle: String {
         switch self {
         case .inuit: return "ᐃᓄᐃᑦ ᓇᕿᑕᕋᖓ"
-        case .english: return "Inuit Keyboard"
+        case .english: return "Inuktitut Keyboard"
         case .french: return "Clavier en Inuktitut"
         }
     }

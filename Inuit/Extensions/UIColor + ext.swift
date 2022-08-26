@@ -38,10 +38,7 @@ extension UIColor {
                             alpha: 1.0)
     }
     
-//    static var appBlue      = colorFromHexValue("1a95b7")
-//    static var appOrange    = colorFromHexValue("e66523")
-//    static var appGreen     = colorFromHexValue("85c441")
-//    static var appYellow    = colorFromHexValue("efcc41")
+    static var systemBlack = colorFromHexValue("121212")
     
     static let appGray : UIColor = {
         return UIColor { traitCollection -> UIColor in
@@ -63,9 +60,7 @@ extension UIColor {
         }
     }()
     
-    static var systemBlack: UIColor = {
-        colorFromHexValue("121212")
-    }()
+    
     
     static var appBlue: UIColor = {
         return UIColor { traitCollection -> UIColor in

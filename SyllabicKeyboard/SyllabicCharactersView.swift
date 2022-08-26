@@ -11,7 +11,6 @@ struct SyllabicCharactersView: View {
     
     @State var columns = SpecialCharacters.inuitCharacters
     
-    
     var body: some View {
         HStack(alignment: .top) {
             ForEach(columns) { row in

@@ -43,7 +43,7 @@ enum SpecialCharacters {
         var color: Color
         
         static let characters = [
-            Self(characters: ["ᐁ", "ᐯ", "ᑌ", "ᑫ", "ᒉ", "ᒣ", "ᓀ", "ᓭ", "ᓓ", "ᔦ", "ᕓ", "ᕂ", "ᙯ", "ᙰ"], color: .black),
+            Self(characters: ["ᐁ", "ᐯ", "ᑌ", "ᑫ", "ᒉ", "ᒣ", "ᓀ", "ᓭ", "ᓓ", "ᔦ", "ᕓ", "ᕂ", "ᙯ", "ᙰ"], color: Color(uiColor: .label)),
             Self(characters: ["ᐃ", "ᐱ", "ᑎ", "ᑭ", "ᒋ", "ᒥ", "ᓂ", "ᓯ", "ᓕ", "ᔨ", "ᕕ", "ᕆ", "ᕿ", "ᖏ"], color: Color(uiColor: .appBlue)),
             Self(characters: ["ᐅ", "ᐳ", "ᑐ", "ᑯ", "ᒍ", "ᒧ", "ᓄ", "ᓱ", "ᓗ", "ᔪ", "ᕗ", "ᕈ", "ᖁ", "ᖑ"], color: Color(uiColor: .appOrange)),
             Self(characters: ["ᐊ", "ᐸ", "ᑕ", "ᑲ", "ᒐ", "ᒪ", "ᓇ", "ᓴ", "ᓚ", "ᔭ", "ᕙ", "ᕋ", "ᖃ", "ᖓ", "ᖠ", "ᖢ", "ᖤ"], color: Color(uiColor: .appGreen))

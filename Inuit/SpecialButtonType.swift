@@ -18,7 +18,7 @@ enum SpecialButtonType {
          arrowRight(onTap: () -> Void),
          arrowLeft(onTap: () -> Void),
          delete(onTap: () -> Void),
-         syllables(onTap: () -> Void),
+         syllables(onTap: () -> Void, keyboardType: KeyboardType),
          twoDots(onTap: () -> Void),
          enter(onTap: () -> Void),
          space(onTap: () -> Void),
@@ -34,6 +34,8 @@ enum SpecialButtonType {
         case .arrowLeft:        return Images.backwards
         case .delete:           return Images.backspace
         case .changeLanguage:   return Images.world
+        case .syllables(_, let keyboardType): return keyboardType.sectionImage
+            
         default:                return nil
         }
     }
@@ -54,12 +56,14 @@ enum SpecialButtonType {
         if case .arrowLeft = self       { return .black }
         if case .arrowRight = self      { return .black }
         if case .delete = self          { return .appGray }
+        if case .space = self           { return .appGray}
+        if case .enter = self           { return .appGray}
         return .white
     }
     
     var hasColoredBackground: Bool {
         switch self {
-        case .sectionOne, .sectionTwo, .sectionThree, .sectionFour, .numericSection, .arrowRight, .arrowLeft: return true
+        case .sectionOne, .sectionTwo, .sectionThree, .sectionFour, .numericSection, .arrowRight, .arrowLeft, .syllables, .twoDots: return true
         default: return false
         }
     }
@@ -80,7 +84,7 @@ enum SpecialButtonType {
                 .arrowRight(let onTap),
                 .arrowLeft(let onTap),
                 .delete(let onTap),
-                .syllables(let onTap),
+                .syllables(let onTap, _),
                 .twoDots(let onTap),
                 .enter(let onTap),
                 .space(let onTap),

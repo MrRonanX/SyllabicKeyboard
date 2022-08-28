@@ -9,19 +9,23 @@ import UIKit
 
 final class KeyboardViewController: UIInputViewController {
     
-    private var layoutConstants        = LayoutConstants()
+    private var layoutConstants             = LayoutConstants()
 
-    private var mainStackView          = UIStackView(frame: .zero)
-    private var consonantsButton       : KeyboardButton!
-    private var twoDotsButton          : KeyboardButton!
+    private var mainStackView               = UIStackView(frame: .zero)
+    private var consonantsButton            : KeyboardButton!
+    private var twoDotsButton               : KeyboardButton!
 
-    private var buttonWidth            = CGFloat()
+    private var buttonWidth                 = CGFloat()
 
-    private var backspaceTimer         : Timer?
+    private var backspaceTimer              : Timer?
 
-    private var consonantsActive       = false
-    private var twoDotsActive          = false
+    private var consonantsActive            = false
+    private var twoDotsActive               = false
+
+    private var tappedButton                : UIView?
     
+    private var accessoryPortraitHeight     = CGFloat()
+    private var accessoryLandscapeHeight    = CGFloat()
     
     
     private var isIpad: Bool { UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad }
@@ -54,8 +58,8 @@ final class KeyboardViewController: UIInputViewController {
         super.viewDidLayoutSubviews()
         
         if view.bounds == .zero { return }
-        
-        let orientationSavvyBounds = CGRect(x: 0, y: 10, width: view.bounds.width, height: height(for: UIScreen.main.orientation) - 15)
+
+        let orientationSavvyBounds = createMainViewFrame()
         
         if (lastLayoutBounds != nil && lastLayoutBounds == orientationSavvyBounds) {
             // do nothing
@@ -65,7 +69,14 @@ final class KeyboardViewController: UIInputViewController {
             addViewsToStackView()
             lastLayoutBounds = orientationSavvyBounds
         }
-
+    }
+    
+    private func createMainViewFrame() -> CGRect {
+        let accessoryViewHeight = isLandscape ? accessoryLandscapeHeight : accessoryPortraitHeight
+        let yPoint = isIpad ? 10 : accessoryViewHeight + 10
+        let verticalPadding = isIpad ? 15 : 15 + accessoryViewHeight
+        
+        return CGRect(x: 0, y: yPoint, width: view.bounds.width, height: height(for: UIScreen.main.orientation) - verticalPadding)
     }
     
     private var selectedKeyboardType: KeyboardType = .sectionOne {
@@ -109,8 +120,8 @@ final class KeyboardViewController: UIInputViewController {
     
     private func height(for orientation: UIInterfaceOrientation) -> CGFloat {
         let actualScreenWidth = UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale
-        let canonicalPortraitHeight: CGFloat
-        let canonicalLandscapeHeight: CGFloat
+        var canonicalPortraitHeight: CGFloat
+        var canonicalLandscapeHeight: CGFloat
         if isIpad {
             canonicalPortraitHeight = 352
             canonicalLandscapeHeight = 352
@@ -118,6 +129,10 @@ final class KeyboardViewController: UIInputViewController {
         else {
             canonicalPortraitHeight = orientation.isPortrait && actualScreenWidth >= 420 ? 216 : 206
             canonicalLandscapeHeight = 172
+            accessoryPortraitHeight = (canonicalPortraitHeight - 15 - 21) / 3
+            accessoryLandscapeHeight = (canonicalLandscapeHeight - 15 - 21) / 3
+            canonicalPortraitHeight += accessoryPortraitHeight
+            canonicalLandscapeHeight += accessoryLandscapeHeight
         }
         
         return CGFloat(orientation.isPortrait ? canonicalPortraitHeight : canonicalLandscapeHeight)
@@ -192,6 +207,7 @@ final class KeyboardViewController: UIInputViewController {
     
     private func createFirstRow() -> UIStackView {
         let rowKeys             = createKeyboardRow(row: selectedKeyboardType.firstRow(consonantsActive, twoDotsActive))
+        print(selectedKeyboardType)
         let firstSectionButton  = createAccessoryButton(type: .sectionOne(onTap: firstSectionSelected))
         
         let rowView             = UIStackView(arrangedSubviews: [firstSectionButton, rowKeys])
@@ -200,7 +216,7 @@ final class KeyboardViewController: UIInputViewController {
         
         guard rowHasConsonants else { return rowView }
         
-        consonantsButton   = createAccessoryButton(type: .syllables(onTap: consonantsTapped))
+        consonantsButton   = createAccessoryButton(type: .syllables(onTap: consonantsTapped, keyboardType: selectedKeyboardType))
         rowView.addArrangedSubview(consonantsButton)
         
         return rowView
@@ -271,36 +287,79 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     private func hasColoredBackground(_ title: String) -> Bool {
-        let inuktitutCharacter = title >=  "᐀" && title <= "ᙿ" || SpecialCharacters.numericFilter.contains(title)
+        let inuktitutCharacter = inuktitutCharacter(title) || SpecialCharacters.numericFilter.contains(title)
         let specialCharacter = SpecialCharacters.filter.contains(title) && selectedKeyboardType == .numericSection && (twoDotsActive || consonantsActive)
         return inuktitutCharacter || specialCharacter
-        
+    }
+    
+    private func inuktitutCharacter(_ title: String) -> Bool {
+        title >=  "᐀" && title <= "ᙿ"
     }
     
     private func createKeyButton(title: String) -> KeyboardButton {
         let button = KeyboardButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        
+        if inuktitutCharacter(title) {
+            button.addTopPadding()
+        }
+        
+        let coloredBackground = hasColoredBackground(title)
+        
+        button.defaultBackgroundColor = coloredBackground ? selectedKeyboardType.backgroundColor : .systemWhite
+        button.setCustomFont(with: title, color: coloredBackground ? selectedKeyboardType.foregroundColor : .appGray)
     
-        if hasColoredBackground(title) {
-            button.defaultBackgroundColor = selectedKeyboardType.backgroundColor
-            button.addTopPadding(to: title, color: selectedKeyboardType.foregroundColor)
-        } else {
-            button.defaultBackgroundColor = .systemWhite
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(.appGray, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 20, weight: .medium)
+        if !isIpad {
+            button.highlightBackgroundColor = .clear
         }
       
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         
+        if !isIpad {
+            button.addTarget(self, action: #selector(touchedDownButton), for: .touchDown)
+            button.addTarget(self, action: #selector(dragExit), for: .touchDragExit)
+            button.addTarget(self, action: #selector(dragIn), for: .touchDragInside)
+        }
+        
         return button
     }
     
-    @objc func didTapButton(_ sender: UIButton) {
-        guard let title = sender.titleLabel?.text else { return }
+    @objc private func touchedDownButton(_ sender: KeyboardButton) {
+        tappedButton?.removeFromSuperview()
+
+        let popUpColor = hasColoredBackground(sender.titleLabel?.text ?? "") ? selectedKeyboardType.backgroundColor : .systemWhite
+        let multiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
         
+        let popUpView = KeyPopUp(frame: .zero, color: popUpColor)
+        popUpView.label.setAttributedTitle(with: sender.titleLabel?.text ?? "", color: sender.titleLabel?.textColor ?? .orange)
+        
+        tappedButton = popUpView
+        view.addSubview(popUpView)
+        popUpView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            popUpView.bottomAnchor.constraint(equalTo: sender.bottomAnchor),
+            popUpView.centerXAnchor.constraint(equalTo: sender.centerXAnchor),
+            popUpView.widthAnchor.constraint(equalTo: sender.widthAnchor, multiplier: 1.78),
+            popUpView.heightAnchor.constraint(equalTo: sender.widthAnchor, multiplier: multiplier)
+        ])
+    }
+    
+    @objc private func dragExit(_ sender: KeyboardButton) {
+        tappedButton?.removeFromSuperview()
+    }
+    
+    @objc private func dragIn(_ sender: KeyboardButton) {
+        touchedDownButton(sender)
+    }
+    
+    @objc private func didTapButton(_ sender: KeyboardButton) {
+        guard let title = sender.titleLabel?.text else { return }
+
+        tappedButton?.removeFromSuperview()
         playSound()
+        
         textDocumentProxy.insertText(title)
 
     }
@@ -312,21 +371,25 @@ final class KeyboardViewController: UIInputViewController {
         
         
         if let title = type.title {
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(.appGray, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+            button.setCustomFont(with: title, color: type.imageColor)
             
             if case .syllables = type {
-                button.setTitleColor(consonantsActive ? selectedKeyboardType.backgroundColor : .appGray, for: .normal)
+                let syllableTitle = consonantsActive ? selectedKeyboardType == .numericSection ? "1" : "" : title
+                button.setCustomFont(with: syllableTitle, color: type.imageColor)
             }
             
             if case .twoDots = type {
-                button.setTitleColor(twoDotsActive ? selectedKeyboardType.backgroundColor : .appGray, for: .normal)
+                button.setCustomFont(with: twoDotsActive ? "1" : title, color: type.imageColor)
             }
-            
-        } else if let image = type.image {
+        }
+        
+        if let image = type.image {
             button.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
             button.tintColor = type.imageColor
+            
+            if case .syllables = type {
+                button.setImage(consonantsActive ? image : nil, for: .normal)
+            }
             
             if case .delete = type {
                 button.pushToRight(image)

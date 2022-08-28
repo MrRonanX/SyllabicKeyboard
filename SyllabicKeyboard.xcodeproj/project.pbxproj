@@ -30,6 +30,11 @@
 		34E2E27A28B7E3E900CB48FC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E27928B7E3E900CB48FC /* Localization.swift */; };
 		34E2E27C28B7E40600CB48FC /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E27B28B7E40600CB48FC /* ContentViewModel.swift */; };
 		34E2E27E28B7E41900CB48FC /* SyllabicCharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E27D28B7E41900CB48FC /* SyllabicCharactersView.swift */; };
+		34E2E2B028B9EC4300CB48FC /* TappedKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E2AF28B9EC4300CB48FC /* TappedKeyView.swift */; };
+		34E2E2F928BB102E00CB48FC /* Ilisarniq-Demi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34E2E2F828BB102E00CB48FC /* Ilisarniq-Demi.ttf */; };
+		34E2E2FA28BB102E00CB48FC /* Ilisarniq-Demi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34E2E2F828BB102E00CB48FC /* Ilisarniq-Demi.ttf */; };
+		34E2E2FF28BB53D900CB48FC /* UILabel + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */; };
+		34E2E30028BB53D900CB48FC /* UILabel + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +84,10 @@
 		34E2E27928B7E3E900CB48FC /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		34E2E27B28B7E40600CB48FC /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		34E2E27D28B7E41900CB48FC /* SyllabicCharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabicCharactersView.swift; sourceTree = "<group>"; };
+		34E2E2AF28B9EC4300CB48FC /* TappedKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappedKeyView.swift; sourceTree = "<group>"; };
+		34E2E2F828BB102E00CB48FC /* Ilisarniq-Demi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ilisarniq-Demi.ttf"; sourceTree = "<group>"; };
+		34E2E2FB28BB131300CB48FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +129,7 @@
 		34258C0D28AF81F800C1E131 /* SyllabicKeyboard */ = {
 			isa = PBXGroup;
 			children = (
+				34E2E2FB28BB131300CB48FC /* Info.plist */,
 				34258C0E28AF81F800C1E131 /* SyllabicKeyboardApp.swift */,
 				34258C1028AF81F800C1E131 /* ContentView.swift */,
 				34E2E27D28B7E41900CB48FC /* SyllabicCharactersView.swift */,
@@ -142,6 +152,7 @@
 		34258C2128AF828800C1E131 /* Inuit */ = {
 			isa = PBXGroup;
 			children = (
+				34E2E2F728BB0FCC00CB48FC /* Fonts */,
 				34E2E27628B7937100CB48FC /* Views */,
 				34E2E27528B7933900CB48FC /* Extensions */,
 				34258C2228AF828800C1E131 /* KeyboardViewController.swift */,
@@ -149,6 +160,7 @@
 				34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */,
 				34E2E26328B4B56700CB48FC /* Constants.swift */,
 				34E2E26728B524B200CB48FC /* Helpers.swift */,
+				34E2E2AF28B9EC4300CB48FC /* TappedKeyView.swift */,
 				34258C2428AF828800C1E131 /* Info.plist */,
 			);
 			path = Inuit;
@@ -163,6 +175,7 @@
 				34E2E26F28B78B6B00CB48FC /* LayoutConstants.swift */,
 				34E2E27128B78BA600CB48FC /* UIButton + ext.swift */,
 				34E2E27328B78BC900CB48FC /* UITraitCollection + ext.swift */,
+				34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -173,6 +186,14 @@
 				34258C2C28AF839900C1E131 /* KeyboardButton.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		34E2E2F728BB0FCC00CB48FC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				34E2E2F828BB102E00CB48FC /* Ilisarniq-Demi.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34E2E2F928BB102E00CB48FC /* Ilisarniq-Demi.ttf in Resources */,
 				34258C1628AF81F800C1E131 /* Preview Assets.xcassets in Resources */,
 				34258C1328AF81F800C1E131 /* Assets.xcassets in Resources */,
 			);
@@ -265,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34E2E2FA28BB102E00CB48FC /* Ilisarniq-Demi.ttf in Resources */,
 				34258C3128AFAD5A00C1E131 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +301,7 @@
 			files = (
 				34258C1128AF81F800C1E131 /* ContentView.swift in Sources */,
 				34E2E27A28B7E3E900CB48FC /* Localization.swift in Sources */,
+				34E2E2FF28BB53D900CB48FC /* UILabel + ext.swift in Sources */,
 				34E2E27C28B7E40600CB48FC /* ContentViewModel.swift in Sources */,
 				34E2E27728B7CC5700CB48FC /* Helpers.swift in Sources */,
 				34258C0F28AF81F800C1E131 /* SyllabicKeyboardApp.swift in Sources */,
@@ -292,6 +316,7 @@
 			files = (
 				34E2E26428B4B56700CB48FC /* Constants.swift in Sources */,
 				34E2E26C28B78B4000CB48FC /* UIScreen + ext.swift in Sources */,
+				34E2E2B028B9EC4300CB48FC /* TappedKeyView.swift in Sources */,
 				34E2E26E28B78B5500CB48FC /* UIInputView + ext.swift in Sources */,
 				34E2E26828B524B200CB48FC /* Helpers.swift in Sources */,
 				34258C2E28AF851C00C1E131 /* KeyboardButton.swift in Sources */,
@@ -302,6 +327,7 @@
 				34258C3028AF957F00C1E131 /* KeyboardType.swift in Sources */,
 				34E2E26A28B67EB300CB48FC /* UIColor + ext.swift in Sources */,
 				34E2E27028B78B6B00CB48FC /* LayoutConstants.swift in Sources */,
+				34E2E30028BB53D900CB48FC /* UILabel + ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +468,7 @@
 				DEVELOPMENT_TEAM = 34W5S52327;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SyllabicKeyboard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Inuktitut;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -474,6 +501,7 @@
 				DEVELOPMENT_TEAM = 34W5S52327;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SyllabicKeyboard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Inuktitut;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

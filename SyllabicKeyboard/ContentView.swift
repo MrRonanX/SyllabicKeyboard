@@ -16,26 +16,21 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: alignment, spacing: 20) {
                 Text(viewModel.selectedLanguage.mainTitle)
-                    .font(.title)
+                    .font(viewModel.font)
                     .bold()
                     .padding(.top)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    Group {
-                        
-                        Text(viewModel.selectedLanguage.installationTitle)
-                            .font(.title)
-                            .foregroundColor(.blue)
-                    }
-                   
-                    
+                    Text(viewModel.selectedLanguage.installationTitle)
+                        .font(viewModel.font)
+                        .foregroundColor(.blue)
                     
                     Text(viewModel.selectedLanguage.settingsTitle)
-                    
+                        .font(viewModel.generalSizeFont)
                     
                     HStack(alignment: .top, spacing: 10) {
                         VStack {
@@ -49,11 +44,12 @@ struct ContentView: View {
                             Text(viewModel.selectedLanguage.keyboardsTitle)
                         }
                     }
-                    
+                    .font(viewModel.generalSizeFont)
                     
                     Text(viewModel.selectedLanguage.addNewKeyboardTitle)
-                    
+                        .font(viewModel.generalSizeFont)
                     Text(viewModel.selectedLanguage.selectKeyboardTitle)
+                        .font(viewModel.generalSizeFont)
                 }
                 .padding(.horizontal)
                 Spacer()
@@ -62,11 +58,16 @@ struct ContentView: View {
                 NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView() }, label: { EmptyView() })
 
             }
-            
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .navigationBarHidden(true)
+            
         }
-        
+        .navigationViewStyle(.stack)
+    }
+    
+    var alignment: HorizontalAlignment {
+        DeviceTypes.isiPad ? .center : .leading
     }
 }
 

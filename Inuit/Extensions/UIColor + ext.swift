@@ -60,8 +60,6 @@ extension UIColor {
         }
     }()
     
-    
-    
     static var appBlue: UIColor = {
         return UIColor { traitCollection -> UIColor in
             if traitCollection.userInterfaceStyle == .dark {

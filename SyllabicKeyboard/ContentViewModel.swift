@@ -5,7 +5,7 @@
 //  Created by Roman Kavinskyi on 8/26/22.
 //
 
-import Foundation
+import SwiftUI
 
 extension ContentView {
     final class ViewModel: ObservableObject {
@@ -23,6 +23,16 @@ extension ContentView {
         
         func frenchSelected() {
             selectedLanguage = .french
+        }
+        
+        var font: Font {
+            if selectedLanguage == .inuit { return Font.custom("Ilisarniq-Demi", size: 28) }
+            return .title
+        }
+        
+        var generalSizeFont: Font {
+            if selectedLanguage == .inuit { return Font.custom("Ilisarniq-Demi", size: 17) }
+            return .body
         }
     }
 }

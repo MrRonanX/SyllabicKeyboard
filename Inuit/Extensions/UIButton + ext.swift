@@ -20,12 +20,17 @@ extension KeyboardButton {
         }
     }
     
-    func addTopPadding(to title: String, color: UIColor) {
+    func addTopPadding() {
         titleEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
-        titleLabel?.font = .systemFont(ofSize: 20, weight: .medium)
-        setTitle(title, for: .normal)
-        setTitleColor(color, for: .normal)
-        setTitleColor(color, for: .highlighted)
+    }
+    
+    func setCustomFont(with title: String, color: UIColor) {
+        let attributes = [
+            NSAttributedString.Key.font: UIFont(name: "Ilisarniq-Demi", size: 22.0)!,
+            NSAttributedString.Key.foregroundColor: color
+            ]
+        let string = NSAttributedString(string: title, attributes: attributes)
+        setAttributedTitle(string, for: .normal)
     }
     
     func resizeImageView(with buttonSize: CGFloat) {

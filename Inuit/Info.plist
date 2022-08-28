@@ -20,5 +20,9 @@
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).KeyboardViewController</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Ilisarniq-Demi.ttf</string>
+	</array>
 </dict>
 </plist>

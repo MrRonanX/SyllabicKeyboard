@@ -5,7 +5,6 @@
 //  Created by Roman Kavinskyi on 8/19/22.
 //
 
-import Foundation
 import UIKit
 
 enum KeyboardType {
@@ -20,7 +19,7 @@ enum KeyboardType {
         case .numericSection:   return ["0", "1", "2", "3", "4", "$", "¢"]
         }
     }
-
+    
     var secondRowKeys: [String] {
         switch self {
         case .sectionOne:       return ["ᓭ", "ᓓ", "ᔦ", "ᕓ", "ᕂ", "ᙯ", "ᙰ"]
@@ -85,7 +84,7 @@ enum KeyboardType {
         return self == .numericSection ? numeric : generic
         
     }
-
+    
     var backgroundColor: UIColor {
         switch self {
         case .sectionOne:       return .systemBlack
@@ -99,6 +98,16 @@ enum KeyboardType {
     var foregroundColor: UIColor {
         if self == .numericSection { return .black }
         return .white
+    }
+    
+    var sectionImage: UIImage? {
+        switch self {
+        case .sectionOne:       return Images.arrowDown
+        case .sectionTwo:       return Images.arrowUp
+        case .sectionThree:     return Images.arrowRight
+        case .sectionFour:      return Images.arrowLeft
+        case .numericSection:   return nil
+        }
     }
     
     func firstRow(_ consonantsActive: Bool, _ twoDotsActive: Bool) -> [String] {

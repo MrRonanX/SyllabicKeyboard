@@ -29,6 +29,10 @@ class KeyboardButton: UIButton {
         backgroundColor = isHighlighted ? highlightBackgroundColor : defaultBackgroundColor
     }
     
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return bounds.insetBy(dx: -5, dy: -7).contains(point)
+    }
+    
     @objc private func buttonTapped() {
         action?()
     }
@@ -46,8 +50,7 @@ class KeyboardButton: UIButton {
 
 // MARK: - Private Methods
 private extension KeyboardButton {
-    func commonInit() {
-        
+    func commonInit() {        
         layer.cornerRadius = 7.0
         layer.masksToBounds = false
         layer.shadowOffset = CGSize(width: 0, height: 1.0)

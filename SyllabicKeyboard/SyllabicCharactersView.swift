@@ -17,8 +17,7 @@ struct SyllabicCharactersView: View {
                 VStack(spacing: 9) {
                     ForEach(row.characters, id:\.self) { character in
                         Text(character)
-                            .font(.title2)
-                            .bold()
+                            .font(Font.custom("Ilisarniq-Demi", size: 22))
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

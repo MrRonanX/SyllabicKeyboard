@@ -124,7 +124,7 @@ enum Localization {
         switch self {
         case .inuit:    return "ᐃᓕᓴᕐᓂᖅ ᖃᓂᐅᔮᕐᐯ Coppers and Brassesᑯᓐᓄ"
         case .english:  return "Ilisarniq typeface created by Coppers and Brasses"
-        case .french:   return "Police Ilisarniq par Coppers and Brasses"
+        case .french:   return "Police de caractères Ilisarniq par Coppers and Brasses"
         }
     }
     

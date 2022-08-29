@@ -19,7 +19,7 @@ enum SpecialButtonType {
          arrowLeft(onTap: () -> Void),
          delete(onTap: () -> Void),
          syllables(onTap: () -> Void, keyboardType: KeyboardType),
-         twoDots(onTap: () -> Void),
+         twoDots(onTap: () -> Void, keyboardType: KeyboardType),
          enter(onTap: () -> Void),
          space(onTap: () -> Void),
          changeLanguage(onTap: () -> Void)
@@ -68,6 +68,21 @@ enum SpecialButtonType {
         }
     }
     
+    var backgroundColor: UIColor {
+        switch self {
+        case .sectionOne:       return .systemBlack
+        case .sectionTwo:       return .appBlue
+        case .sectionThree:     return .appOrange
+        case .sectionFour:      return .appGreen
+        case .arrowRight:       return .appYellow
+        case .arrowLeft:        return .appYellow
+        case .numericSection:   return .appYellow
+        case .delete, .changeLanguage, .enter, .space: return .systemWhite
+        case .syllables(_, let keyboardType),
+                .twoDots(_, let keyboardType): return keyboardType.backgroundColor
+        }
+    }
+    
     var hasArrow: Bool {
         if case .arrowLeft  = self { return true }
         if case .arrowRight = self { return true }
@@ -85,7 +100,7 @@ enum SpecialButtonType {
                 .arrowLeft(let onTap),
                 .delete(let onTap),
                 .syllables(let onTap, _),
-                .twoDots(let onTap),
+                .twoDots(let onTap, _),
                 .enter(let onTap),
                 .space(let onTap),
                 .changeLanguage(let onTap):

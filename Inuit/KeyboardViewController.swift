@@ -19,7 +19,7 @@ final class KeyboardViewController: UIInputViewController {
 
     private var backspaceTimer              : Timer?
 
-    private var consonantsActive            = false
+    private var syllablesActive             = false
     private var twoDotsActive               = false
 
     private var tappedButton                : UIView?
@@ -202,11 +202,11 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     private var rowHasArrows: Bool {
-        selectedKeyboardType == .numericSection && !twoDotsActive && !consonantsActive
+        selectedKeyboardType == .numericSection && !twoDotsActive && !syllablesActive
     }
     
     private func createFirstRow() -> UIStackView {
-        let rowKeys             = createKeyboardRow(row: selectedKeyboardType.firstRow(consonantsActive, twoDotsActive))
+        let rowKeys             = createKeyboardRow(row: selectedKeyboardType.firstRow(syllablesActive, twoDotsActive))
         print(selectedKeyboardType)
         let firstSectionButton  = createAccessoryButton(type: .sectionOne(onTap: firstSectionSelected))
         
@@ -223,7 +223,7 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     private func createSecondRow() -> UIStackView {
-        let rowKeys             = createKeyboardRow(row: selectedKeyboardType.secondRow(consonantsActive, twoDotsActive))
+        let rowKeys             = createKeyboardRow(row: selectedKeyboardType.secondRow(syllablesActive, twoDotsActive))
         let secondSectionButton = createAccessoryButton(type: .sectionTwo(onTap: secondSectionSelected))
         
         let rowView             = UIStackView(arrangedSubviews: [secondSectionButton, rowKeys])
@@ -239,7 +239,7 @@ final class KeyboardViewController: UIInputViewController {
         
         guard rowHasConsonants else { return rowView }
         
-        twoDotsButton = createAccessoryButton(type: .twoDots(onTap: twoDotsTapped))
+        twoDotsButton = createAccessoryButton(type: .twoDots(onTap: twoDotsTapped, keyboardType: selectedKeyboardType))
         rowView.addArrangedSubview(twoDotsButton)
         
         return rowView
@@ -247,7 +247,7 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     private func createThirdRow() -> UIStackView {
-        let rowKeys             = createKeyboardRow(row: selectedKeyboardType.thirdRow(consonantsActive, twoDotsActive))
+        let rowKeys             = createKeyboardRow(row: selectedKeyboardType.thirdRow(syllablesActive, twoDotsActive))
         let thirdSectionButton  = createAccessoryButton(type: .sectionThree(onTap: thirdSectionSelected))
         
         let longPressGesture    = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressOfBackSpaceKey))
@@ -288,7 +288,7 @@ final class KeyboardViewController: UIInputViewController {
     
     private func hasColoredBackground(_ title: String) -> Bool {
         let inuktitutCharacter = inuktitutCharacter(title) || SpecialCharacters.numericFilter.contains(title)
-        let specialCharacter = SpecialCharacters.filter.contains(title) && selectedKeyboardType == .numericSection && (twoDotsActive || consonantsActive)
+        let specialCharacter = SpecialCharacters.filter.contains(title) && selectedKeyboardType == .numericSection && (twoDotsActive || syllablesActive)
         return inuktitutCharacter || specialCharacter
     }
     
@@ -369,40 +369,14 @@ final class KeyboardViewController: UIInputViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.action = type.action
         
+        button.setTitle(for: type)
+        button.adjustTitleForSyllables(type: type, active: syllablesActive)
+        button.adjustTitleForTwoDots(type: type, active: twoDotsActive)
         
-        if let title = type.title {
-            button.setCustomFont(with: title, color: type.imageColor)
-            
-            if case .syllables = type {
-                let syllableTitle = consonantsActive ? selectedKeyboardType == .numericSection ? "1" : "" : title
-                button.setCustomFont(with: syllableTitle, color: type.imageColor)
-            }
-            
-            if case .twoDots = type {
-                button.setCustomFont(with: twoDotsActive ? "1" : title, color: type.imageColor)
-            }
-        }
+        button.setImage(for: type)
+        button.adjustImageForSyllables(type: type, active: syllablesActive)
         
-        if let image = type.image {
-            button.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
-            button.tintColor = type.imageColor
-            
-            if case .syllables = type {
-                button.setImage(consonantsActive ? image : nil, for: .normal)
-            }
-            
-            if case .delete = type {
-                button.pushToRight(image)
-
-            } else if type.hasArrow {
-                button.resizeImageView(with: buttonWidth)
-            }
-        }
-        
-        if type.hasColoredBackground {
-            button.defaultBackgroundColor = selectedKeyboardType.backgroundColor
-            button.setTitleColor(.white, for: .normal)
-        }
+        button.setBackgroundColor(for: type)
 
         switch type {
         case .delete, .enter, .space:
@@ -436,7 +410,7 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     private func resetState() {
-        consonantsActive = false
+        syllablesActive = false
         twoDotsActive = false
     }
     
@@ -482,7 +456,7 @@ final class KeyboardViewController: UIInputViewController {
     
     private func consonantsTapped() {
         playSound()
-        consonantsActive.toggle()
+        syllablesActive.toggle()
         twoDotsActive = false
         addViewsToStackView()
     }
@@ -490,7 +464,7 @@ final class KeyboardViewController: UIInputViewController {
     private func twoDotsTapped() {
         playSound()
         twoDotsActive.toggle()
-        consonantsActive = false
+        syllablesActive = false
         
         if selectedKeyboardType != .numericSection {
             selectedKeyboardType = .sectionOne

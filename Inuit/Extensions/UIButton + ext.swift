@@ -33,12 +33,11 @@ extension KeyboardButton {
         setAttributedTitle(string, for: .normal)
     }
     
-    func resizeImageView(with buttonSize: CGFloat) {
+    func resizeImageView() {
         guard let imageView = imageView else { return }
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let constant = buttonSize > 40 ? 20 : buttonSize / 2
         
-        let heightConstraint = imageView.heightAnchor.constraint(equalToConstant: constant)
+        let heightConstraint = imageView.heightAnchor.constraint(equalToConstant: 20)
         heightConstraint.priority = .init(rawValue: 999)
         NSLayoutConstraint.activate([heightConstraint])
     }

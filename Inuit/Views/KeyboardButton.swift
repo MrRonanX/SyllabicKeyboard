@@ -45,6 +45,46 @@ class KeyboardButton: UIButton {
         defaultBackgroundColor = .systemWhite
         backgroundColor = .systemWhite
     }
+    
+    func setBackgroundColor(for type: SpecialButtonType) {
+        guard type.hasColoredBackground else { return }
+        defaultBackgroundColor = type.backgroundColor
+        setTitleColor(.white, for: .normal)
+    }
+    
+    func setTitle(for type: SpecialButtonType) {
+        guard let title = type.title else { return }
+        setCustomFont(with: title, color: type.imageColor)
+    }
+    
+    func adjustTitleForSyllables(type: SpecialButtonType, active: Bool) {
+        guard case .syllables(_, let keyboard) = type, let title = type.title else {return }
+        let syllableTitle = active ? keyboard == .numericSection ? "1" : "" : title
+        setCustomFont(with: syllableTitle, color: type.imageColor)
+    }
+    
+    func adjustTitleForTwoDots(type: SpecialButtonType, active: Bool) {
+        guard case .twoDots = type, let title = type.title else { return }
+        setCustomFont(with: active ? "1" : title, color: type.imageColor)
+    }
+    
+    func setImage(for type: SpecialButtonType) {
+        guard let image = type.image else { return }
+        setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
+        tintColor = type.imageColor
+        
+        if case .delete = type {
+            pushToRight(image)
+
+        } else if type.hasArrow {
+            resizeImageView()
+        }
+    }
+    
+    func adjustImageForSyllables(type: SpecialButtonType, active: Bool) {
+        guard case .syllables = type, let image = type.image else { return }
+        setImage(active ? image : nil, for: .normal)
+    }
 }
 
 

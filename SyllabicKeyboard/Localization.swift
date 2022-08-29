@@ -87,4 +87,44 @@ enum Localization {
         case .french: return "Afficher les caractères syllabiques"
         }
     }
+    
+    var credit: String {
+        switch self {
+        case .inuit:    return "ᓄᐃᑎᓯᒪᔪᑦ"
+        case .english:  return "Credit"
+        case .french:   return "Crédit"
+        }
+    }
+    
+    var designed: String {
+        switch self {
+        case .inuit:    return "ᐆᒪ ᐱᒍᓐᓇᓯᑎᑕᕕᓂᖓ: ᑑᒪᓯ ᒪᖏᐅᖅ"
+        case .english:  return "Designed by: Thomassie Mangiok"
+        case .french:   return "Conçu par: Thomassie Mangiok"
+        }
+    }
+    
+    var founded: String {
+        switch self {
+        case .inuit:    return "ᐆᒪ ᑮᓇᐅᔭᖃᑦᑎᓂᑯᖓ: ᐊᕙᑕᖅ ᐱᐅᓯᑐᖃᓕᕆᕕᒃ"
+        case .english:  return "Funded by: Avataq Cultural Institute"
+        case .french:   return "Financé par: L’Institut Culturel Avataq"
+        }
+    }
+    
+    var programmed: String {
+        switch self {
+        case .inuit:    return "ᐆᒪ ᓴᓇᔭᕕᓂᖓ: ᕉᒪᓐ ᑲᕕᓐᔅᑭ"
+        case .english:  return "Programmed by: Roman Kavinskyi"
+        case .french:   return "Programmé par: Roman Kavinskyi"
+        }
+    }
+    
+    var fontCredit: String {
+        switch self {
+        case .inuit:    return "ᐃᓕᓴᕐᓂᖅ ᖃᓂᐅᔮᕐᐯ Coppers and Brassesᑯᓐᓄ"
+        case .english:  return "Ilisarniq font by Coppers and Brasses"
+        case .french:   return "Police Ilisarniq par Coppers and Brasses"
+        }
+    }
 }

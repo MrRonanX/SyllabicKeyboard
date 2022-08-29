@@ -15,7 +15,6 @@ enum Images {
     static let arrowRight   = UIImage(systemName: "arrowtriangle.right.fill")
     static let backspace    = UIImage(systemName: "delete.backward")
     static let world        = UIImage(systemName: "globe")
-    static let tab          = UIImage(named: "Asset 40")
     static let forward      = UIImage(named: "Asset 38")
     static let backwards    = UIImage(named: "Asset 39")
 }

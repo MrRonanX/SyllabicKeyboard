@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-
-
-
 struct ContentView: View {
     
     @StateObject var viewModel = ViewModel()
@@ -17,11 +14,25 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: alignment, spacing: 20) {
-                Text(viewModel.selectedLanguage.mainTitle)
-                    .font(viewModel.font)
-                    .bold()
-                    .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                ZStack {
+                    Text(viewModel.selectedLanguage.mainTitle)
+                        .font(viewModel.font)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    HStack {
+                        Spacer()
+                        NavigationLink {
+                            CreditPage(viewModel: viewModel)
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                        }
+                    }
+                }
+               
                 
                 
                 VStack(alignment: .leading, spacing: 20) {
@@ -54,6 +65,8 @@ struct ContentView: View {
                 .padding(.horizontal)
                 Spacer()
                 
+                
+
                 ButtonsView(viewModel: viewModel)
                 NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView() }, label: { EmptyView() })
 
@@ -61,7 +74,6 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .navigationBarHidden(true)
-            
         }
         .navigationViewStyle(.stack)
     }

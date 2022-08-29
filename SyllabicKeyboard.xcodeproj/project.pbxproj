@@ -35,6 +35,8 @@
 		34E2E2FA28BB102E00CB48FC /* Ilisarniq-Demi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34E2E2F828BB102E00CB48FC /* Ilisarniq-Demi.ttf */; };
 		34E2E2FF28BB53D900CB48FC /* UILabel + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */; };
 		34E2E30028BB53D900CB48FC /* UILabel + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */; };
+		34E2E30228BCB17300CB48FC /* CreditPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30128BCB17300CB48FC /* CreditPage.swift */; };
+		34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30328BCD3BA00CB48FC /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		34E2E2F828BB102E00CB48FC /* Ilisarniq-Demi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ilisarniq-Demi.ttf"; sourceTree = "<group>"; };
 		34E2E2FB28BB131300CB48FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + ext.swift"; sourceTree = "<group>"; };
+		34E2E30128BCB17300CB48FC /* CreditPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPage.swift; sourceTree = "<group>"; };
+		34E2E30328BCD3BA00CB48FC /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,11 +136,13 @@
 				34E2E2FB28BB131300CB48FC /* Info.plist */,
 				34258C0E28AF81F800C1E131 /* SyllabicKeyboardApp.swift */,
 				34258C1028AF81F800C1E131 /* ContentView.swift */,
+				34E2E30128BCB17300CB48FC /* CreditPage.swift */,
 				34E2E27D28B7E41900CB48FC /* SyllabicCharactersView.swift */,
 				34E2E27B28B7E40600CB48FC /* ContentViewModel.swift */,
 				34258C1228AF81F800C1E131 /* Assets.xcassets */,
 				34258C1428AF81F800C1E131 /* Preview Content */,
 				34E2E27928B7E3E900CB48FC /* Localization.swift */,
+				34E2E30328BCD3BA00CB48FC /* WebView.swift */,
 			);
 			path = SyllabicKeyboard;
 			sourceTree = "<group>";
@@ -300,11 +306,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				34258C1128AF81F800C1E131 /* ContentView.swift in Sources */,
+				34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */,
 				34E2E27A28B7E3E900CB48FC /* Localization.swift in Sources */,
 				34E2E2FF28BB53D900CB48FC /* UILabel + ext.swift in Sources */,
 				34E2E27C28B7E40600CB48FC /* ContentViewModel.swift in Sources */,
 				34E2E27728B7CC5700CB48FC /* Helpers.swift in Sources */,
 				34258C0F28AF81F800C1E131 /* SyllabicKeyboardApp.swift in Sources */,
+				34E2E30228BCB17300CB48FC /* CreditPage.swift in Sources */,
 				34E2E27E28B7E41900CB48FC /* SyllabicCharactersView.swift in Sources */,
 				34E2E27828B7CE5700CB48FC /* UIColor + ext.swift in Sources */,
 			);

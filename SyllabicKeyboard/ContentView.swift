@@ -98,15 +98,17 @@ fileprivate struct ButtonsView: View {
             LanguageButton(title: viewModel.selectedLanguage.buttonTitle, color: .green, action: { viewModel.navigationActive.toggle()})
             
             HStack(spacing: 10) {
-                LanguageButton(title: "Syllabic", color: syllabicColor, action: viewModel.inuitSelected)
+                LanguageButton(title: "ᐃᓄᒃᑎᑐᑦ", color: syllabicColor, action: viewModel.inuitSelected)
+                    .font(Font.custom("Ilisarniq-Demi", size: 17))
                 LanguageButton(title: "English", color: englishColor, action: viewModel.englishSelected)
-                LanguageButton(title: "French", color: frenchColor, action: viewModel.frenchSelected)
+                    .font(.headline)
+                LanguageButton(title: "Français", color: frenchColor, action: viewModel.frenchSelected)
+                    .font(.headline)
             }
         }
     }
     
     private var buttonColor: Color {
-        
         colorScheme == .dark ? .white : Color(uiColor: .systemBlack)
     }
     
@@ -134,7 +136,6 @@ fileprivate struct LanguageButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.headline)
                 .foregroundColor(textColor)
                 .frame(maxWidth: .infinity)
                 .padding()

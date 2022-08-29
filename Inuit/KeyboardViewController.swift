@@ -207,7 +207,6 @@ final class KeyboardViewController: UIInputViewController {
     
     private func createFirstRow() -> UIStackView {
         let rowKeys             = createKeyboardRow(row: selectedKeyboardType.firstRow(syllablesActive, twoDotsActive))
-        print(selectedKeyboardType)
         let firstSectionButton  = createAccessoryButton(type: .sectionOne(onTap: firstSectionSelected))
         
         let rowView             = UIStackView(arrangedSubviews: [firstSectionButton, rowKeys])

@@ -127,4 +127,15 @@ enum Localization {
         case .french:   return "Police Ilisarniq par Coppers and Brasses"
         }
     }
+    
+    private var englishUrl: String { "https://en.wikipedia.org/wiki/Inuktitut" }
+    
+    var wikiURL: String {
+        switch self {
+        case .inuit:    return "https://iu.wikipedia.org/wiki/ᐃᓄᒃᑎᑐᑦ".encodeSpecialCharacters() ?? englishUrl
+        case .english:  return englishUrl
+        case .french:   return "https://fr.wikipedia.org/wiki/Inuktitut"
+        }
+    }
 }
+

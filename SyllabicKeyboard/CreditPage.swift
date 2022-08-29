@@ -22,7 +22,7 @@ struct CreditPage: View {
             .font(viewModel.generalSizeFont)
             .padding()
             
-            WebView(url: URL(string: "https://en.wikipedia.org/wiki/Inuktitut")!)
+            WebView(urlString: viewModel.selectedLanguage.wikiURL)
         }
         .navigationTitle(viewModel.selectedLanguage.credit)
         .navigationBarTitleDisplayMode(.inline)

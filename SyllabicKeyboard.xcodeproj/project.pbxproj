@@ -37,6 +37,7 @@
 		34E2E30028BB53D900CB48FC /* UILabel + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */; };
 		34E2E30228BCB17300CB48FC /* CreditPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30128BCB17300CB48FC /* CreditPage.swift */; };
 		34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30328BCD3BA00CB48FC /* WebView.swift */; };
+		34E2E30828BD349400CB48FC /* String + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30728BD349400CB48FC /* String + ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + ext.swift"; sourceTree = "<group>"; };
 		34E2E30128BCB17300CB48FC /* CreditPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPage.swift; sourceTree = "<group>"; };
 		34E2E30328BCD3BA00CB48FC /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		34E2E30728BD349400CB48FC /* String + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				34258C1428AF81F800C1E131 /* Preview Content */,
 				34E2E27928B7E3E900CB48FC /* Localization.swift */,
 				34E2E30328BCD3BA00CB48FC /* WebView.swift */,
+				34E2E30728BD349400CB48FC /* String + ext.swift */,
 			);
 			path = SyllabicKeyboard;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34E2E30828BD349400CB48FC /* String + ext.swift in Sources */,
 				34258C1128AF81F800C1E131 /* ContentView.swift in Sources */,
 				34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */,
 				34E2E27A28B7E3E900CB48FC /* Localization.swift in Sources */,

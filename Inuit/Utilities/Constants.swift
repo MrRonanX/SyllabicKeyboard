@@ -17,6 +17,7 @@ enum Images {
     static let world        = UIImage(systemName: "globe")
     static let forward      = UIImage(named: "Asset 38")
     static let backwards    = UIImage(named: "Asset 39")
+    static let logo         = UIImage(named: "logoNoBackground")
 }
 
 

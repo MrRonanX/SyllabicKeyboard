@@ -11,9 +11,8 @@ final class KeyboardViewController: UIInputViewController {
     
     private var layoutConstants             = LayoutConstants()
 
-    private var mainStackView               = UIStackView(frame: .zero)
-    private var consonantsButton            : KeyboardButton!
-    private var twoDotsButton               : KeyboardButton!
+    private var mainStackView               = UIStackView()
+    private var suggestionView              = SuggestionsView()
 
     private var buttonWidth                 = CGFloat()
 
@@ -26,6 +25,15 @@ final class KeyboardViewController: UIInputViewController {
     
     private var accessoryPortraitHeight     = CGFloat()
     private var accessoryLandscapeHeight    = CGFloat()
+    
+    private var suggestionCore              = SuggestionCore()
+    private var currentWord                 = String() {
+        didSet {
+            showSuggestions()
+        }
+    }
+    
+    private var spaceLastTapped             = Date()
     
     
     private var isIpad: Bool { UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad }
@@ -49,6 +57,7 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     deinit {
+        print("deinit")
         mainStackView.removeFromSuperview()
     }
     
@@ -73,8 +82,8 @@ final class KeyboardViewController: UIInputViewController {
     
     private func createMainViewFrame() -> CGRect {
         let accessoryViewHeight = isLandscape ? accessoryLandscapeHeight : accessoryPortraitHeight
-        let yPoint = isIpad ? 10 : accessoryViewHeight + 10
-        let verticalPadding = isIpad ? 15 : 15 + accessoryViewHeight
+        let yPoint = /* isIpad ? 10 : */ accessoryViewHeight + 10
+        let verticalPadding = /* isIpad ? 15 :*/ 15 + accessoryViewHeight
         
         return CGRect(x: 0, y: yPoint, width: view.bounds.width, height: height(for: UIScreen.main.orientation) - verticalPadding)
     }
@@ -100,6 +109,7 @@ final class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createMainStackView()
+        createSuggestionsSection()
     }
 
     // MARK: - View Size Setup
@@ -123,8 +133,10 @@ final class KeyboardViewController: UIInputViewController {
         var canonicalPortraitHeight: CGFloat
         var canonicalLandscapeHeight: CGFloat
         if isIpad {
-            canonicalPortraitHeight = 352
-            canonicalLandscapeHeight = 352
+            canonicalPortraitHeight = 392
+            canonicalLandscapeHeight = 392
+            accessoryPortraitHeight = 40
+            accessoryLandscapeHeight = 40
         }
         else {
             canonicalPortraitHeight = orientation.isPortrait && actualScreenWidth >= 420 ? 216 : 206
@@ -177,7 +189,7 @@ final class KeyboardViewController: UIInputViewController {
         let secondRow   = createSecondRow()
         let thirdRow    = createThirdRow()
         let fourthRow   = createFourthRow()
-        
+
         mainStackView.addArrangedSubview(firstRow)
         mainStackView.addArrangedSubview(secondRow)
         mainStackView.addArrangedSubview(thirdRow)
@@ -207,15 +219,17 @@ final class KeyboardViewController: UIInputViewController {
     
     private func createFirstRow() -> UIStackView {
         let rowKeys             = createKeyboardRow(row: selectedKeyboardType.firstRow(syllablesActive, twoDotsActive))
-        let firstSectionButton  = createAccessoryButton(type: .sectionOne(onTap: firstSectionSelected))
         
-        let rowView             = UIStackView(arrangedSubviews: [firstSectionButton, rowKeys])
-        rowView.distribution    = .fillProportionally
-        rowView.spacing         = keySpacing
+        let firstSectionButton  = createAccessoryButton(type: .sectionOne)
+        firstSectionButton.addTarget(self, action: #selector(firstSectionSelected), for: .touchUpInside)
+        
+        let rowView             = KeyboardRowView(arrangedSubviews: [firstSectionButton, rowKeys])
         
         guard rowHasConsonants else { return rowView }
         
-        consonantsButton   = createAccessoryButton(type: .syllables(onTap: consonantsTapped, keyboardType: selectedKeyboardType))
+        let consonantsButton   = createAccessoryButton(type: .syllables(keyboardType: selectedKeyboardType))
+        consonantsButton.addTarget(self, action: #selector(consonantsTapped), for: .touchUpInside)
+        
         rowView.addArrangedSubview(consonantsButton)
         
         return rowView
@@ -223,22 +237,25 @@ final class KeyboardViewController: UIInputViewController {
     
     private func createSecondRow() -> UIStackView {
         let rowKeys             = createKeyboardRow(row: selectedKeyboardType.secondRow(syllablesActive, twoDotsActive))
-        let secondSectionButton = createAccessoryButton(type: .sectionTwo(onTap: secondSectionSelected))
         
-        let rowView             = UIStackView(arrangedSubviews: [secondSectionButton, rowKeys])
-        rowView.distribution    = .fillProportionally
-        rowView.spacing         = keySpacing
+        let secondSectionButton = createAccessoryButton(type: .sectionTwo)
+        secondSectionButton.addTarget(self, action: #selector(secondSectionSelected), for: .touchUpInside)
+        
+        let rowView             = KeyboardRowView(arrangedSubviews: [secondSectionButton, rowKeys])
         
         if rowHasArrows {
-            let leftArrow  = createAccessoryButton(type: .arrowLeft(onTap: arrowLeftTapped))
-            let rightArrow = createAccessoryButton(type: .arrowRight(onTap: arrowRightTapped))
+            let leftArrow  = createAccessoryButton(type: .arrowLeft)
+            let rightArrow = createAccessoryButton(type: .arrowRight)
+            leftArrow.addTarget(self, action: #selector(arrowLeftTapped), for: .touchUpInside)
+            rightArrow.addTarget(self, action: #selector(arrowRightTapped), for: .touchUpInside)
             rowView.addArrangedSubview(leftArrow)
             rowView.addArrangedSubview(rightArrow)
         }
         
         guard rowHasConsonants else { return rowView }
         
-        twoDotsButton = createAccessoryButton(type: .twoDots(onTap: twoDotsTapped, keyboardType: selectedKeyboardType))
+        let twoDotsButton = createAccessoryButton(type: .twoDots(keyboardType: selectedKeyboardType))
+        twoDotsButton.addTarget(self, action: #selector(twoDotsTapped), for: .touchUpInside)
         rowView.addArrangedSubview(twoDotsButton)
         
         return rowView
@@ -247,41 +264,43 @@ final class KeyboardViewController: UIInputViewController {
     
     private func createThirdRow() -> UIStackView {
         let rowKeys             = createKeyboardRow(row: selectedKeyboardType.thirdRow(syllablesActive, twoDotsActive))
-        let thirdSectionButton  = createAccessoryButton(type: .sectionThree(onTap: thirdSectionSelected))
+        let thirdSectionButton  = createAccessoryButton(type: .sectionThree)
+        thirdSectionButton.addTarget(self, action: #selector(thirdSectionSelected), for: .touchUpInside)
         
         let longPressGesture    = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressOfBackSpaceKey))
         longPressGesture.minimumPressDuration       = 0.5
         longPressGesture.numberOfTouchesRequired    = 1
         longPressGesture.allowableMovement          = 0.1
         
-        let backSpaceButton = createAccessoryButton(type: .delete(onTap: deleteTapped))
+        let backSpaceButton = createAccessoryButton(type: .delete)
+        backSpaceButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         backSpaceButton.addGestureRecognizer(longPressGesture)
         
-        let rowView = UIStackView(arrangedSubviews: [thirdSectionButton, rowKeys, backSpaceButton])
-        rowView.distribution = .fillProportionally
-        rowView.spacing = keySpacing
+        let rowView = KeyboardRowView(arrangedSubviews: [thirdSectionButton, rowKeys, backSpaceButton])
         
         return rowView
     }
     
     private func createFourthRow() -> UIStackView {
-        let fourthSectionButton     = createAccessoryButton(type: .sectionFour(onTap: fourthSectionSelected))
-        let numericSectionButton    = createAccessoryButton(type: .numericSection(onTap: numericSectionSelected))
-       
-        let spaceKey                = createAccessoryButton(type: .space(onTap: spaceTapped))
-        let returnButton            = createAccessoryButton(type: .enter(onTap: returnTapped))
+        let fourthSectionButton     = createAccessoryButton(type: .sectionFour)
+        let numericSectionButton    = createAccessoryButton(type: .numericSection)
+        let spaceKey                = createAccessoryButton(type: .space)
+        let returnButton            = createAccessoryButton(type: .enter)
         
-        let rowView = UIStackView(arrangedSubviews: [fourthSectionButton, numericSectionButton, spaceKey, returnButton])
+        fourthSectionButton.addTarget(self, action: #selector(fourthSectionSelected), for: .touchUpInside)
+        numericSectionButton.addTarget(self, action: #selector(numericSectionSelected), for: .touchUpInside)
+        spaceKey.addTarget(self, action: #selector(spaceTapped), for: .touchUpInside)
+        returnButton.addTarget(self, action: #selector(returnTapped), for: .touchUpInside)
+        
+        let rowView = KeyboardRowView(arrangedSubviews: [fourthSectionButton, numericSectionButton, spaceKey, returnButton])
         
         if isIpad || DeviceTypes.olderIphone {
-            let changeLanguageButton = createAccessoryButton(type: .changeLanguage(onTap: playSound))
+            let changeLanguageButton = createAccessoryButton(type: .changeLanguage)
+            changeLanguageButton.addTarget(self, action: #selector(playSound), for: .touchUpInside)
             changeLanguageButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
             rowView.insertArrangedSubview(changeLanguageButton, at: 2)
         }
-        
-        rowView.distribution = .fillProportionally
-        rowView.spacing = keySpacing
-        
+
         return rowView
     }
     
@@ -324,6 +343,83 @@ final class KeyboardViewController: UIInputViewController {
         return button
     }
     
+    private func createAccessoryButton(type: SpecialButtonType) -> KeyboardButton {
+        let button = KeyboardButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.setTitle(for: type)
+        button.adjustTitleForSyllables(type: type, active: syllablesActive)
+        button.adjustTitleForTwoDots(type: type, active: twoDotsActive)
+        
+        button.setImage(for: type)
+        button.adjustImageForSyllables(type: type, active: syllablesActive)
+        
+        button.setBackgroundColor(for: type)
+
+        switch type {
+        case .delete, .enter, .space:
+            var multiplier = 2.0
+            if case .space = type {
+                let constant: CGFloat = isIpad || DeviceTypes.olderIphone ? 2 : 3
+                multiplier += constant
+            }
+            button.widthAnchor.constraint(equalToConstant: buttonWidth * multiplier + keySpacing * (multiplier - 1)).isActive = true
+            return button
+        default:
+            button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+            return button
+        }
+    }
+    
+    // MARK: - Suggestions Section Creation
+    
+    private func createSuggestionsSection() {
+        suggestionView.suggestionAccepted = { [weak self] suggestion in
+            self?.suggestionTapped(suggestion)
+        }
+        
+        view.addSubview(suggestionView)
+        
+        NSLayoutConstraint.activate([
+            suggestionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            suggestionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            suggestionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            suggestionView.heightAnchor.constraint(equalToConstant: isIpad ? 20 : 40)
+        ])
+    }
+    
+    private func showSuggestions() {
+        guard suggestionCore.suggestionsActive else { return }
+        
+        suggestionView.insertSuggestions(list: suggestionCore.provideSuggestions(for: currentWord))
+    }
+    
+    private func suggestionTapped(_ suggestion: String) {
+        for _ in 0..<currentWord.count {
+            textDocumentProxy.deleteBackward()
+        }
+        textDocumentProxy.insertText(suggestion)
+        textDocumentProxy.insertText(" ")
+        suggestionCore.wordTyped(word: suggestion)
+        currentWord = ""
+    }
+    
+    // MARK: - Keys Pressed Logic
+    
+    @objc private func onLongPressOfBackSpaceKey(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            (gesture.view as! KeyboardButton).longTouchStarted()
+            backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+                self.deleteTapped()
+            }
+        } else if gesture.state == .ended || gesture.state == .cancelled {
+            backspaceTimer?.invalidate()
+            backspaceTimer = nil
+            (gesture.view as! KeyboardButton).longTouchEnded()
+        }
+    }
+    
     @objc private func touchedDownButton(_ sender: KeyboardButton) {
         tappedButton?.removeFromSuperview()
 
@@ -360,52 +456,13 @@ final class KeyboardViewController: UIInputViewController {
         playSound()
         
         textDocumentProxy.insertText(title)
-
-    }
-    
-    private func createAccessoryButton(type: SpecialButtonType) -> KeyboardButton {
-        let button = KeyboardButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.action = type.action
         
-        button.setTitle(for: type)
-        button.adjustTitleForSyllables(type: type, active: syllablesActive)
-        button.adjustTitleForTwoDots(type: type, active: twoDotsActive)
-        
-        button.setImage(for: type)
-        button.adjustImageForSyllables(type: type, active: syllablesActive)
-        
-        button.setBackgroundColor(for: type)
-
-        switch type {
-        case .delete, .enter, .space:
-            var multiplier = 2.0
-            if case .space = type {
-                let constant: CGFloat = isIpad || DeviceTypes.olderIphone ? 2 : 3
-                multiplier += constant
-            }
-            button.widthAnchor.constraint(equalToConstant: buttonWidth * multiplier + keySpacing * (multiplier - 1)).isActive = true
-            return button
-        default:
-            button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-            return button
+        guard inuktitutCharacter(title) else {
+            suggestionCore.wordTyped(word: currentWord.trimmingCharacters(in: .whitespaces))
+            currentWord = ""
+            return
         }
-    }
-    
-    // MARK: - Keys Pressed Logic
-    
-    @objc func onLongPressOfBackSpaceKey(_ gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            (gesture.view as! KeyboardButton).longTouchStarted()
-            backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-                guard let self = self else { return }
-                self.deleteTapped()
-            }
-        } else if gesture.state == .ended || gesture.state == .cancelled {
-            backspaceTimer?.invalidate()
-            backspaceTimer = nil
-            (gesture.view as! KeyboardButton).longTouchEnded()
-        }
+        currentWord.append(title)
     }
     
     private func resetState() {
@@ -413,54 +470,54 @@ final class KeyboardViewController: UIInputViewController {
         twoDotsActive = false
     }
     
-    private func firstSectionSelected() {
+    @objc private func firstSectionSelected() {
         resetState()
         playSound()
         selectedKeyboardType = .sectionOne
     }
     
-    private func secondSectionSelected() {
+    @objc private func secondSectionSelected() {
         resetState()
         playSound()
         selectedKeyboardType = .sectionTwo
     }
     
-    private func thirdSectionSelected() {
+    @objc private func thirdSectionSelected() {
         resetState()
         playSound()
         selectedKeyboardType = .sectionThree
     }
     
-    private func fourthSectionSelected() {
+    @objc private func fourthSectionSelected() {
         resetState()
         playSound()
         selectedKeyboardType = .sectionFour
     }
     
-    private func numericSectionSelected() {
+    @objc private func numericSectionSelected() {
         resetState()
         playSound()
         selectedKeyboardType = .numericSection
     }
     
-    private func arrowRightTapped() {
+    @objc private func arrowRightTapped() {
         playSound()
         textDocumentProxy.adjustTextPosition(byCharacterOffset: 1)
     }
     
-    private func arrowLeftTapped() {
+    @objc private func arrowLeftTapped() {
         playSound()
         textDocumentProxy.adjustTextPosition(byCharacterOffset: -1)
     }
     
-    private func consonantsTapped() {
+    @objc private func consonantsTapped() {
         playSound()
         syllablesActive.toggle()
         twoDotsActive = false
         addViewsToStackView()
     }
     
-    private func twoDotsTapped() {
+    @objc private func twoDotsTapped() {
         playSound()
         twoDotsActive.toggle()
         syllablesActive = false
@@ -473,22 +530,44 @@ final class KeyboardViewController: UIInputViewController {
         addViewsToStackView()
     }
     
-    private func spaceTapped(){
+    @objc private func spaceTapped(){
+        if spaceLastTapped.isDoubleTap {
+            spaceDoubleTapped()
+            return
+        }
         playSound()
         textDocumentProxy.insertText(" ")
+        suggestionCore.wordTyped(word: currentWord.trimmingCharacters(in: .whitespaces))
+        currentWord = ""
+        spaceLastTapped = Date()
+        
     }
     
-    private func returnTapped() {
-        playSound()
-        textDocumentProxy.insertText("\n")
-    }
-    
-    private func deleteTapped() {
+    private func spaceDoubleTapped() {
         playSound()
         textDocumentProxy.deleteBackward()
+        textDocumentProxy.insertText(". ")
+        suggestionCore.wordTyped(word: currentWord.trimmingCharacters(in: .whitespaces))
+        currentWord = ""
     }
     
-    private func playSound() {
+    @objc private func returnTapped() {
+        playSound()
+        textDocumentProxy.insertText("\n")
+        suggestionCore.wordTyped(word: currentWord)
+        currentWord = ""
+    }
+    
+    @objc private func deleteTapped() {
+        playSound()
+        textDocumentProxy.deleteBackward()
+        
+        if !currentWord.isEmpty {
+            currentWord.removeLast()
+        }
+    }
+    
+    @objc private func playSound() {
         inputView?.playInputClick​()
     }
 }

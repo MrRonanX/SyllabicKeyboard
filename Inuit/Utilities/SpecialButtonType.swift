@@ -10,19 +10,19 @@ import UIKit
 
 enum SpecialButtonType {
     
-    case sectionOne(onTap: () -> Void),
-         sectionTwo(onTap: () -> Void),
-         sectionThree(onTap: () -> Void),
-         sectionFour(onTap: () -> Void),
-         numericSection(onTap: () -> Void),
-         arrowRight(onTap: () -> Void),
-         arrowLeft(onTap: () -> Void),
-         delete(onTap: () -> Void),
-         syllables(onTap: () -> Void, keyboardType: KeyboardType),
-         twoDots(onTap: () -> Void, keyboardType: KeyboardType),
-         enter(onTap: () -> Void),
-         space(onTap: () -> Void),
-         changeLanguage(onTap: () -> Void)
+    case sectionOne,
+         sectionTwo,
+         sectionThree,
+         sectionFour,
+         numericSection,
+         arrowRight,
+         arrowLeft,
+         delete,
+         syllables(keyboardType: KeyboardType),
+         twoDots(keyboardType: KeyboardType),
+         enter,
+         space,
+         changeLanguage
     
     var image: UIImage? {
         switch self {
@@ -34,7 +34,7 @@ enum SpecialButtonType {
         case .arrowLeft:        return Images.backwards
         case .delete:           return Images.backspace
         case .changeLanguage:   return Images.world
-        case .syllables(_, let keyboardType): return keyboardType.sectionImage
+        case .syllables(let keyboardType): return keyboardType.sectionImage
             
         default:                return nil
         }
@@ -78,8 +78,8 @@ enum SpecialButtonType {
         case .arrowLeft:        return .appYellow
         case .numericSection:   return .appYellow
         case .delete, .changeLanguage, .enter, .space: return .systemWhite
-        case .syllables(_, let keyboardType),
-                .twoDots(_, let keyboardType): return keyboardType.backgroundColor
+        case .syllables(let keyboardType),
+                .twoDots(let keyboardType): return keyboardType.backgroundColor
         }
     }
     
@@ -87,24 +87,5 @@ enum SpecialButtonType {
         if case .arrowLeft  = self { return true }
         if case .arrowRight = self { return true }
         return false
-    }
-    
-    func action() {
-        switch self {
-        case .sectionOne(let onTap),
-                .sectionTwo(let onTap),
-                .sectionThree(let onTap),
-                .sectionFour(let onTap),
-                .numericSection(let onTap),
-                .arrowRight(let onTap),
-                .arrowLeft(let onTap),
-                .delete(let onTap),
-                .syllables(let onTap, _),
-                .twoDots(let onTap, _),
-                .enter(let onTap),
-                .space(let onTap),
-                .changeLanguage(let onTap):
-            onTap()
-        }
     }
 }

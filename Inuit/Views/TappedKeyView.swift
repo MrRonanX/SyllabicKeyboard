@@ -27,11 +27,6 @@ final class KeyPopUp: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-//        let context = UIGraphicsGetCurrentContext()
-//
-//        let shadow = UIColor.black
-//        let shadowOffset = CGSize(width: 0, height: 0)
-//        let shadowBlurRadius: CGFloat = 2
 
         let rowSpacer = rect.height / 11
         let sideExpansion = rect.width / 4.6
@@ -99,18 +94,9 @@ final class KeyPopUp: UIView {
         popUpColor.set()
         UIColor.systemWhite.setStroke()
         
-//        context?.saveGState()
-//
-//        context?.setShadow(offset: shadowOffset, blur: shadowBlurRadius,  color: (shadow as UIColor).cgColor)
-        
         path.fill()
         path.lineWidth = 1
         path.stroke()
-        
-        
-//        context?.restoreGState()
-        
-        
     }
     
     private func setLabel() {

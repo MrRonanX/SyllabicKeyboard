@@ -137,5 +137,37 @@ enum Localization {
         case .french:   return "https://fr.wikipedia.org/wiki/Inuktitut"
         }
     }
+    
+    var alertTitle: String {
+        "We need your consent"
+    }
+    
+    var alertMessage: String {
+        #"When "Personalized suggestions" enabled algorithms track what vocabulary you use and on what frequency. Algorithm provides suggestions based on how often the word was used by you. The algorithm is executed on the device and all the information is stored on locally on the device. You can disable suggestions or delete all collected data from this application"#
+    }
+    
+    var alertOKButton: String {
+        "Enable"
+    }
+    
+    var alertCancelButton: String {
+        "Cancel"
+    }
+    
+    var deletionConfirmationTitle: String {
+        "Delete All Data"
+    }
+    
+    var deletionConfirmationMessage: String {
+        "This action is irreversible"
+    }
+    
+    var deleteButtonTitle: String {
+        "Delete"
+    }
+    
+    var successfulDeletionTitle: String {
+        "All data has been removed"
+    }
 }
 

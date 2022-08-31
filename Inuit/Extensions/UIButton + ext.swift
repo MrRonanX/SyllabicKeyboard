@@ -7,6 +7,17 @@
 
 import UIKit
 
+extension UIButton {
+    func setCustomFont(with title: String, color: UIColor, size: CGFloat = 22.0) {
+        let attributes = [
+            NSAttributedString.Key.font: UIFont(name: "Ilisarniq-Demi", size: size)!,
+            NSAttributedString.Key.foregroundColor: color
+            ]
+        let string = NSAttributedString(string: title, attributes: attributes)
+        setAttributedTitle(string, for: .normal)
+    }
+}
+
 extension KeyboardButton {
     func pushToRight(_ image: UIImage, padding: CGFloat = 10) {
         contentHorizontalAlignment = .trailing
@@ -22,15 +33,6 @@ extension KeyboardButton {
     
     func addTopPadding() {
         titleEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
-    }
-    
-    func setCustomFont(with title: String, color: UIColor) {
-        let attributes = [
-            NSAttributedString.Key.font: UIFont(name: "Ilisarniq-Demi", size: 22.0)!,
-            NSAttributedString.Key.foregroundColor: color
-            ]
-        let string = NSAttributedString(string: title, attributes: attributes)
-        setAttributedTitle(string, for: .normal)
     }
     
     func resizeImageView() {

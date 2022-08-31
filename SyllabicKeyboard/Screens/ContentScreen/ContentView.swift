@@ -14,72 +14,90 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: alignment, spacing: 20) {
-                ZStack {
-                    Text(viewModel.selectedLanguage.mainTitle)
-                        .font(viewModel.font)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    
-                    HStack {
-                        Spacer()
-                        NavigationLink {
-                            CreditPage(viewModel: viewModel)
-                        } label: {
-                            Image(systemName: "info.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                        }
-                    }
-                }
-               
-                
-                
-                VStack(alignment: .leading, spacing: 20) {
-                    Text(viewModel.selectedLanguage.installationTitle)
-                        .font(viewModel.font)
-                        .foregroundColor(.blue)
-                    
-                    Text(viewModel.selectedLanguage.settingsTitle)
-                        .font(viewModel.generalSizeFont)
-                    
-                    HStack(alignment: .top, spacing: 10) {
-                        VStack {
-                            Text(viewModel.selectedLanguage.goToTitle)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("  ")
-                            Text(viewModel.selectedLanguage.generalTitle)
-                            Text(viewModel.selectedLanguage.keyboardTitle)
-                            Text(viewModel.selectedLanguage.keyboardsTitle)
-                        }
-                    }
-                    .font(viewModel.generalSizeFont)
-                    
-                    Text(viewModel.selectedLanguage.addNewKeyboardTitle)
-                        .font(viewModel.generalSizeFont)
-                    Text(viewModel.selectedLanguage.selectKeyboardTitle)
-                        .font(viewModel.generalSizeFont)
-                }
-                .padding(.horizontal)
+                mainTitle
+                installationInstructions
+                suggestionsSwitch
+//                    .alignmentGuide(., computeValue: <#T##(ViewDimensions) -> CGFloat#>)
                 Spacer()
                 
                 
-
+                
                 ButtonsView(viewModel: viewModel)
                 NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView() }, label: { EmptyView() })
-
+                
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .onAppear(perform: viewModel.setInitialValue)
+//            .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .navigationBarHidden(true)
+            .alert(item: $viewModel.alert) { $0.alert }
         }
         .navigationViewStyle(.stack)
     }
     
     var alignment: HorizontalAlignment {
         DeviceTypes.isiPad ? .center : .leading
+    }
+    
+    var mainTitle: some View {
+        ZStack {
+            Text(viewModel.selectedLanguage.mainTitle)
+                .font(viewModel.font)
+                .bold()
+//                .frame(maxWidth: .infinity, alignment: .center)
+            
+            HStack {
+                Spacer()
+                NavigationLink {
+                    CreditPage(viewModel: viewModel)
+                } label: {
+                    Image(systemName: "info.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                }
+            }
+        }
+    }
+    
+    var installationInstructions: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text(viewModel.selectedLanguage.installationTitle)
+                .font(viewModel.font)
+                .foregroundColor(.blue)
+            
+            Text(viewModel.selectedLanguage.settingsTitle)
+                .font(viewModel.generalSizeFont)
+            
+            HStack(alignment: .top, spacing: 10) {
+                VStack {
+                    Text(viewModel.selectedLanguage.goToTitle)
+                }
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("  ")
+                    Text(viewModel.selectedLanguage.generalTitle)
+                    Text(viewModel.selectedLanguage.keyboardTitle)
+                    Text(viewModel.selectedLanguage.keyboardsTitle)
+                }
+            }
+            .font(viewModel.generalSizeFont)
+            
+            Text(viewModel.selectedLanguage.addNewKeyboardTitle)
+                .font(viewModel.generalSizeFont)
+            Text(viewModel.selectedLanguage.selectKeyboardTitle)
+                .font(viewModel.generalSizeFont)
+        }
+        .padding(.horizontal)
+    }
+    
+    var suggestionsSwitch: some View {
+        VStack(alignment: .leading) {
+            Toggle("Enable personalized suggestions", isOn: $viewModel.suggestionsToggle)
+            if viewModel.dictionaryHasSuggestions {
+                Button("Delete collected data", action: viewModel.deleteButtonTapped)
+            }
+        }
     }
 }
 
@@ -109,7 +127,7 @@ fileprivate struct ButtonsView: View {
     }
     
     private var buttonColor: Color {
-        colorScheme == .dark ? .white : Color(uiColor: .systemBlack)
+        colorScheme == .dark ? .white : Color(UIColor.systemBlack)
     }
     
     private var syllabicColor: Color {
@@ -128,7 +146,7 @@ fileprivate struct ButtonsView: View {
 fileprivate struct LanguageButton: View {
     
     @Environment(\.colorScheme) var colorScheme
-
+    
     var title: String
     var color: Color
     var action: () -> Void

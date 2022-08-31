@@ -12,8 +12,6 @@ class KeyboardButton: UIButton {
     var defaultBackgroundColor: UIColor = .systemWhite
     var highlightBackgroundColor: UIColor = .lightGray
     
-    var action: (() -> Void)?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -31,10 +29,6 @@ class KeyboardButton: UIButton {
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         return bounds.insetBy(dx: -5, dy: -7).contains(point)
-    }
-    
-    @objc private func buttonTapped() {
-        action?()
     }
     
     func longTouchStarted() {
@@ -58,7 +52,7 @@ class KeyboardButton: UIButton {
     }
     
     func adjustTitleForSyllables(type: SpecialButtonType, active: Bool) {
-        guard case .syllables(_, let keyboard) = type, let title = type.title else {return }
+        guard case .syllables(let keyboard) = type, let title = type.title else {return }
         let syllableTitle = active ? keyboard == .numericSection ? "1" : "" : title
         setCustomFont(with: syllableTitle, color: type.imageColor)
     }
@@ -98,6 +92,5 @@ private extension KeyboardButton {
         layer.shadowOpacity = 0.35
         
         imageView?.contentMode = .scaleAspectFit
-        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 }

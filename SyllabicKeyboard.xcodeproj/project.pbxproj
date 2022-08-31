@@ -16,6 +16,11 @@
 		34258C2E28AF851C00C1E131 /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2C28AF839900C1E131 /* KeyboardButton.swift */; };
 		34258C3028AF957F00C1E131 /* KeyboardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2F28AF957F00C1E131 /* KeyboardType.swift */; };
 		34258C3128AFAD5A00C1E131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34258C1228AF81F800C1E131 /* Assets.xcassets */; };
+		3469EC7628BF28F7006723DE /* AlertItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7528BF28F7006723DE /* AlertItem.swift */; };
+		3469EC7828BF2FBA006723DE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7728BF2FBA006723DE /* Keys.swift */; };
+		3469EC7928BF2FC4006723DE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7728BF2FBA006723DE /* Keys.swift */; };
+		3469EC8328BFA8EF006723DE /* SuggestionsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */; };
+		346C104128BE0C4F00866D0B /* Date + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346C104028BE0C4F00866D0B /* Date + ext.swift */; };
 		34E2E26228B4B41900CB48FC /* SpecialButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */; };
 		34E2E26428B4B56700CB48FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26328B4B56700CB48FC /* Constants.swift */; };
 		34E2E26828B524B200CB48FC /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26728B524B200CB48FC /* Helpers.swift */; };
@@ -38,6 +43,9 @@
 		34E2E30228BCB17300CB48FC /* CreditPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30128BCB17300CB48FC /* CreditPage.swift */; };
 		34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30328BCD3BA00CB48FC /* WebView.swift */; };
 		34E2E30828BD349400CB48FC /* String + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30728BD349400CB48FC /* String + ext.swift */; };
+		34E2E30A28BDE2B900CB48FC /* SuggestionsCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E30928BDE2B900CB48FC /* SuggestionsCore.swift */; };
+		34E2E31128BDF8F500CB48FC /* SuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E31028BDF8F500CB48FC /* SuggestionsView.swift */; };
+		34E2E31328BDF93A00CB48FC /* KeyboardRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E31228BDF93A00CB48FC /* KeyboardRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +83,10 @@
 		34258C2428AF828800C1E131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34258C2C28AF839900C1E131 /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
 		34258C2F28AF957F00C1E131 /* KeyboardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardType.swift; sourceTree = "<group>"; };
+		3469EC7528BF28F7006723DE /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
+		3469EC7728BF2FBA006723DE /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsPersistenceManager.swift; sourceTree = "<group>"; };
+		346C104028BE0C4F00866D0B /* Date + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + ext.swift"; sourceTree = "<group>"; };
 		34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialButtonType.swift; sourceTree = "<group>"; };
 		34E2E26328B4B56700CB48FC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		34E2E26728B524B200CB48FC /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -94,6 +106,11 @@
 		34E2E30128BCB17300CB48FC /* CreditPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPage.swift; sourceTree = "<group>"; };
 		34E2E30328BCD3BA00CB48FC /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		34E2E30728BD349400CB48FC /* String + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + ext.swift"; sourceTree = "<group>"; };
+		34E2E30928BDE2B900CB48FC /* SuggestionsCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsCore.swift; sourceTree = "<group>"; };
+		34E2E30B28BDE35300CB48FC /* Inuit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Inuit.entitlements; sourceTree = "<group>"; };
+		34E2E30D28BDE3C700CB48FC /* SyllabicKeyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SyllabicKeyboard.entitlements; sourceTree = "<group>"; };
+		34E2E31028BDF8F500CB48FC /* SuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsView.swift; sourceTree = "<group>"; };
+		34E2E31228BDF93A00CB48FC /* KeyboardRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,17 +152,14 @@
 		34258C0D28AF81F800C1E131 /* SyllabicKeyboard */ = {
 			isa = PBXGroup;
 			children = (
+				3469EC7E28BFA144006723DE /* Screens */,
+				3469EC7D28BFA13C006723DE /* App */,
+				3469EC7C28BFA127006723DE /* Views */,
+				3469EC7B28BFA119006723DE /* Extensions */,
+				34E2E30D28BDE3C700CB48FC /* SyllabicKeyboard.entitlements */,
 				34E2E2FB28BB131300CB48FC /* Info.plist */,
-				34258C0E28AF81F800C1E131 /* SyllabicKeyboardApp.swift */,
-				34258C1028AF81F800C1E131 /* ContentView.swift */,
-				34E2E30128BCB17300CB48FC /* CreditPage.swift */,
-				34E2E27D28B7E41900CB48FC /* SyllabicCharactersView.swift */,
-				34E2E27B28B7E40600CB48FC /* ContentViewModel.swift */,
 				34258C1228AF81F800C1E131 /* Assets.xcassets */,
 				34258C1428AF81F800C1E131 /* Preview Content */,
-				34E2E27928B7E3E900CB48FC /* Localization.swift */,
-				34E2E30328BCD3BA00CB48FC /* WebView.swift */,
-				34E2E30728BD349400CB48FC /* String + ext.swift */,
 			);
 			path = SyllabicKeyboard;
 			sourceTree = "<group>";
@@ -161,18 +175,82 @@
 		34258C2128AF828800C1E131 /* Inuit */ = {
 			isa = PBXGroup;
 			children = (
+				3469EC8128BFA8C1006723DE /* Suggestions */,
+				3469EC8028BFA8AF006723DE /* Utilities */,
+				34E2E30B28BDE35300CB48FC /* Inuit.entitlements */,
 				34E2E2F728BB0FCC00CB48FC /* Fonts */,
 				34E2E27628B7937100CB48FC /* Views */,
 				34E2E27528B7933900CB48FC /* Extensions */,
 				34258C2228AF828800C1E131 /* KeyboardViewController.swift */,
+				34258C2428AF828800C1E131 /* Info.plist */,
+			);
+			path = Inuit;
+			sourceTree = "<group>";
+		};
+		3469EC7B28BFA119006723DE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				34E2E30728BD349400CB48FC /* String + ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3469EC7C28BFA127006723DE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				34E2E30328BCD3BA00CB48FC /* WebView.swift */,
+				3469EC7528BF28F7006723DE /* AlertItem.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3469EC7D28BFA13C006723DE /* App */ = {
+			isa = PBXGroup;
+			children = (
+				34258C0E28AF81F800C1E131 /* SyllabicKeyboardApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		3469EC7E28BFA144006723DE /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				3469EC7F28BFA14F006723DE /* ContentScreen */,
+				34E2E30128BCB17300CB48FC /* CreditPage.swift */,
+				34E2E27D28B7E41900CB48FC /* SyllabicCharactersView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3469EC7F28BFA14F006723DE /* ContentScreen */ = {
+			isa = PBXGroup;
+			children = (
+				34E2E27928B7E3E900CB48FC /* Localization.swift */,
+				34258C1028AF81F800C1E131 /* ContentView.swift */,
+				34E2E27B28B7E40600CB48FC /* ContentViewModel.swift */,
+			);
+			path = ContentScreen;
+			sourceTree = "<group>";
+		};
+		3469EC8028BFA8AF006723DE /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
 				34258C2F28AF957F00C1E131 /* KeyboardType.swift */,
 				34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */,
 				34E2E26328B4B56700CB48FC /* Constants.swift */,
 				34E2E26728B524B200CB48FC /* Helpers.swift */,
-				34E2E2AF28B9EC4300CB48FC /* TappedKeyView.swift */,
-				34258C2428AF828800C1E131 /* Info.plist */,
+				3469EC7728BF2FBA006723DE /* Keys.swift */,
 			);
-			path = Inuit;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		3469EC8128BFA8C1006723DE /* Suggestions */ = {
+			isa = PBXGroup;
+			children = (
+				34E2E30928BDE2B900CB48FC /* SuggestionsCore.swift */,
+				3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */,
+			);
+			path = Suggestions;
 			sourceTree = "<group>";
 		};
 		34E2E27528B7933900CB48FC /* Extensions */ = {
@@ -185,6 +263,7 @@
 				34E2E27128B78BA600CB48FC /* UIButton + ext.swift */,
 				34E2E27328B78BC900CB48FC /* UITraitCollection + ext.swift */,
 				34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */,
+				346C104028BE0C4F00866D0B /* Date + ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -193,6 +272,9 @@
 			isa = PBXGroup;
 			children = (
 				34258C2C28AF839900C1E131 /* KeyboardButton.swift */,
+				34E2E31028BDF8F500CB48FC /* SuggestionsView.swift */,
+				34E2E31228BDF93A00CB48FC /* KeyboardRowView.swift */,
+				34E2E2AF28B9EC4300CB48FC /* TappedKeyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -309,8 +391,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				34E2E30828BD349400CB48FC /* String + ext.swift in Sources */,
+				3469EC7628BF28F7006723DE /* AlertItem.swift in Sources */,
 				34258C1128AF81F800C1E131 /* ContentView.swift in Sources */,
 				34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */,
+				3469EC7928BF2FC4006723DE /* Keys.swift in Sources */,
 				34E2E27A28B7E3E900CB48FC /* Localization.swift in Sources */,
 				34E2E2FF28BB53D900CB48FC /* UILabel + ext.swift in Sources */,
 				34E2E27C28B7E40600CB48FC /* ContentViewModel.swift in Sources */,
@@ -327,12 +411,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				34E2E26428B4B56700CB48FC /* Constants.swift in Sources */,
+				346C104128BE0C4F00866D0B /* Date + ext.swift in Sources */,
 				34E2E26C28B78B4000CB48FC /* UIScreen + ext.swift in Sources */,
 				34E2E2B028B9EC4300CB48FC /* TappedKeyView.swift in Sources */,
 				34E2E26E28B78B5500CB48FC /* UIInputView + ext.swift in Sources */,
+				3469EC8328BFA8EF006723DE /* SuggestionsPersistenceManager.swift in Sources */,
 				34E2E26828B524B200CB48FC /* Helpers.swift in Sources */,
+				3469EC7828BF2FBA006723DE /* Keys.swift in Sources */,
+				34E2E31328BDF93A00CB48FC /* KeyboardRowView.swift in Sources */,
 				34258C2E28AF851C00C1E131 /* KeyboardButton.swift in Sources */,
+				34E2E31128BDF8F500CB48FC /* SuggestionsView.swift in Sources */,
 				34E2E26228B4B41900CB48FC /* SpecialButtonType.swift in Sources */,
+				34E2E30A28BDE2B900CB48FC /* SuggestionsCore.swift in Sources */,
 				34E2E27428B78BC900CB48FC /* UITraitCollection + ext.swift in Sources */,
 				34258C2328AF828800C1E131 /* KeyboardViewController.swift in Sources */,
 				34E2E27228B78BA600CB48FC /* UIButton + ext.swift in Sources */,
@@ -474,6 +564,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SyllabicKeyboard/SyllabicKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SyllabicKeyboard/Preview Content\"";
@@ -488,6 +579,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -507,6 +599,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SyllabicKeyboard/SyllabicKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SyllabicKeyboard/Preview Content\"";
@@ -521,6 +614,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = Inuit/Inuit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 34W5S52327;
@@ -545,6 +640,7 @@
 				INFOPLIST_FILE = Inuit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Inuktitut;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,6 +660,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = Inuit/Inuit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 34W5S52327;
@@ -571,6 +668,7 @@
 				INFOPLIST_FILE = Inuit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Inuktitut;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

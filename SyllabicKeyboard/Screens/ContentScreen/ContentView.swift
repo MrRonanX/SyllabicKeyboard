@@ -13,21 +13,21 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: alignment, spacing: 20) {
-                mainTitle
-                installationInstructions
-                suggestionsSwitch
-//                    .alignmentGuide(., computeValue: <#T##(ViewDimensions) -> CGFloat#>)
-                Spacer()
-                
-                
-                
-                ButtonsView(viewModel: viewModel)
-                NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView() }, label: { EmptyView() })
-                
+            ZStack(alignment: alignment) {
+                VStack(alignment: .leading, spacing: 20) {
+                    mainTitle
+                    installationInstructions
+                    suggestionsSwitch
+                    Spacer()
+            }
+                .frame(width: DeviceTypes.isiPad ? 320 : nil)
+                VStack {
+                    Spacer()
+                    ButtonsView(viewModel: viewModel)
+                    NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView() }, label: { EmptyView() })
+                }
             }
             .onAppear(perform: viewModel.setInitialValue)
-//            .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .navigationBarHidden(true)
             .alert(item: $viewModel.alert) { $0.alert }
@@ -35,7 +35,7 @@ struct ContentView: View {
         .navigationViewStyle(.stack)
     }
     
-    var alignment: HorizontalAlignment {
+    var alignment: Alignment {
         DeviceTypes.isiPad ? .center : .leading
     }
     
@@ -92,11 +92,16 @@ struct ContentView: View {
     }
     
     var suggestionsSwitch: some View {
-        VStack(alignment: .leading) {
-            Toggle("Enable personalized suggestions", isOn: $viewModel.suggestionsToggle)
-            if viewModel.dictionaryHasSuggestions {
-                Button("Delete collected data", action: viewModel.deleteButtonTapped)
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 15) {
+                Text("Enable personalized suggestions")
+                if viewModel.dictionaryHasSuggestions {
+                    Button("Delete collected data", action: viewModel.deleteButtonTapped)
+                }
             }
+            Spacer()
+            Toggle("", isOn: $viewModel.suggestionsToggle)
+                .frame(width: 50)
         }
     }
 }

@@ -44,7 +44,6 @@ struct ContentView: View {
             Text(viewModel.selectedLanguage.mainTitle)
                 .font(viewModel.font)
                 .bold()
-//                .frame(maxWidth: .infinity, alignment: .center)
             
             HStack {
                 Spacer()
@@ -94,9 +93,9 @@ struct ContentView: View {
     var suggestionsSwitch: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 15) {
-                Text("Enable personalized suggestions")
+                Text(viewModel.selectedLanguage.toggleTitle)
                 if viewModel.dictionaryHasSuggestions {
-                    Button("Delete collected data", action: viewModel.deleteButtonTapped)
+                    Button(viewModel.selectedLanguage.deleteButtonTitle, action: viewModel.deleteButtonTapped)
                 }
             }
             Spacer()

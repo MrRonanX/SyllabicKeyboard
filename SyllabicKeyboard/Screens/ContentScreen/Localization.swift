@@ -139,35 +139,83 @@ enum Localization {
     }
     
     var alertTitle: String {
-        "We need your consent"
+        switch self {
+        case .inuit:    return ""
+        case .english:  return "We need your consent"
+        case .french:   return ""
+        }
     }
     
     var alertMessage: String {
-        #"When "Personalized suggestions" enabled algorithms track what vocabulary you use and on what frequency. Algorithm provides suggestions based on how often the word was used by you. The algorithm is executed on the device and all the information is stored on locally on the device. You can disable suggestions or delete all collected data from this application"#
+        switch self {
+        case .inuit:    return #""ᐃᓕᓐᓂᑐᐊ ᐱᒍᑦᔨᔪᒃ" ᐊᐅᓚᑎᑐᐊᒍᕕᐅᒃ, ᐊᓪᓚᒐᔪᓲᑎᑦ ᖃᕆᑕᐅᔮᕈᓐᓄᑦ ᓄᐊᑕᐅᔪᑦ ᐊᓪᓚᓕᕈᕕᑦ ᐅᖃᐅᓰᑦ ᐊᓪᓚᓲᑎᑦ ᓇᕐᓂᓗᒋᑦ ᓄᐃᑎᕇᕈᓐᓇᖃᑦᑕᕋᔭᕋᕕᒋᑦ. ᐅᖃᐅᓰᑦ ᓄᐊᑕᐅᒪᔪᑦ ᖃᕆᑕᐅᔮᕈᑉᐱᑦ ᐃᓗᐊᓃᑐᐃᓐᓇᓚᖓᔪᑦ ᓄᖑᑎᕈᓐᓇᓱᒋᓪᓗ. ᐃᓕᓐᓂᑐᐊ ᐱᒍᑦᔨᔪᒃ ᓄᕐᖃᑎᒍᓐᓇᑌᑦ"#
+        case .english:  return #"When "Personalized suggestions" enabled algorithms track what vocabulary you use and on what frequency. Algorithm provides suggestions based on how often the word was used by you. The algorithm is executed on the device and all the information is stored on locally on the device. You can disable suggestions or delete all collected data from this application"#
+        case .french:   return #"Lorsque les "Suggestions personnalisées" sont activées, les algorithmes suivent le vocabulaire que vous utilisez et à quelle fréquence. L'algorithme fournit des suggestions en fonction de la fréquence à laquelle vous avez utilisé le mot. L'algorithme est exécuté sur l'appareil et toutes les informations sont stockées localement sur l'appareil. Vous pouvez désactiver les suggestions ou supprimer toutes les données collectées de cette application"#
+        }
     }
     
     var alertOKButton: String {
-        "Enable"
+        switch self {
+        case .inuit:    return "ᐱᕈᓐᓇᓯᑎᓗᒍ"
+        case .english:  return "Enable"
+        case .french:   return "Activer"
+        }
     }
     
     var alertCancelButton: String {
-        "Cancel"
+        switch self {
+        case .inuit:    return "ᖁᔭᓇ"
+        case .english:  return "Cancel"
+        case .french:   return "Annuler"
+        }
     }
     
     var deletionConfirmationTitle: String {
-        "Delete All Data"
+        switch self {
+        case .inuit:    return "ᐊᓪᓚᑕᐅᒪᔪᓕᒫᑦ ᓄᖑᑎᓪᓕ"
+        case .english:  return "Delete All Data"
+        case .french:   return "Supprimer toutes les données"
+        }
     }
     
     var deletionConfirmationMessage: String {
-        "This action is irreversible"
+        switch self {
+        case .inuit:    return "ᐊᑑᑎᒍᕕᐅ ᐅᑎᕆᐊᕐᖃᔭᓚᖓᖕᖏᑐᑎᑦ"
+        case .english:  return "This action is irreversible"
+        case .french:   return "Cette action est irréversible"
+        }
     }
     
     var deleteButtonTitle: String {
-        "Delete"
+        switch self {
+        case .inuit:    return "ᓄᖑᑎᕆᐅᑎᒃ"
+        case .english:  return "Delete"
+        case .french:   return "Effacer"
+        }
     }
     
     var successfulDeletionTitle: String {
-        "All data has been removed"
+        switch self {
+        case .inuit:    return "ᐊᓪᓚᑕᐅᒪᔪᓕᒫᑦ ᓄᖑᑎᓯᒪᔪᑦ"
+        case .english:  return "All data has been removed"
+        case .french:   return "Toutes les données ont été supprimées"
+        }
+    }
+    
+    var toggleTitle: String {
+        switch self {
+        case .inuit:    return "ᐃᓕᓐᓂᑐᐊ ᐱᒍᑦᔨᔪᒃ ᐊᐅᓚᑎᓗᒍ"
+        case .english:  return "Enable personalized suggestions"
+        case .french:   return "Activer les suggestions personnalisées"
+        }
+    }
+    
+    var deleteDataButtonTitle: String {
+        switch self {
+        case .inuit:    return "ᐊᓪᓚᓯᒪᔪᑦ ᓄᐊᑕᐅᒪᔪᑦ ᓄᖑᑎᓪᓕ"
+        case .english:  return "Delete collected data"
+        case .french:   return "Supprimer les données collectées"
+        }
     }
 }
 

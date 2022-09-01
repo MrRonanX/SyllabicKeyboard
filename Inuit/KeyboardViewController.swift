@@ -389,8 +389,6 @@ final class KeyboardViewController: UIInputViewController {
     }
     
     private func showSuggestions() {
-        guard suggestionCore.suggestionsActive else { return }
-        
         suggestionView.insertSuggestions(list: suggestionCore.provideSuggestions(for: currentWord))
     }
     

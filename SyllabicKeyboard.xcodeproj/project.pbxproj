@@ -20,6 +20,7 @@
 		3469EC7828BF2FBA006723DE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7728BF2FBA006723DE /* Keys.swift */; };
 		3469EC7928BF2FC4006723DE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7728BF2FBA006723DE /* Keys.swift */; };
 		3469EC8328BFA8EF006723DE /* SuggestionsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */; };
+		3469EC8528C0904C006723DE /* StaticSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC8428C0904C006723DE /* StaticSuggestions.swift */; };
 		346C104128BE0C4F00866D0B /* Date + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346C104028BE0C4F00866D0B /* Date + ext.swift */; };
 		34E2E26228B4B41900CB48FC /* SpecialButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */; };
 		34E2E26428B4B56700CB48FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26328B4B56700CB48FC /* Constants.swift */; };
@@ -86,6 +87,7 @@
 		3469EC7528BF28F7006723DE /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		3469EC7728BF2FBA006723DE /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsPersistenceManager.swift; sourceTree = "<group>"; };
+		3469EC8428C0904C006723DE /* StaticSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSuggestions.swift; sourceTree = "<group>"; };
 		346C104028BE0C4F00866D0B /* Date + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + ext.swift"; sourceTree = "<group>"; };
 		34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialButtonType.swift; sourceTree = "<group>"; };
 		34E2E26328B4B56700CB48FC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 		3469EC8128BFA8C1006723DE /* Suggestions */ = {
 			isa = PBXGroup;
 			children = (
+				3469EC8428C0904C006723DE /* StaticSuggestions.swift */,
 				34E2E30928BDE2B900CB48FC /* SuggestionsCore.swift */,
 				3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */,
 			);
@@ -423,6 +426,7 @@
 				34E2E31128BDF8F500CB48FC /* SuggestionsView.swift in Sources */,
 				34E2E26228B4B41900CB48FC /* SpecialButtonType.swift in Sources */,
 				34E2E30A28BDE2B900CB48FC /* SuggestionsCore.swift in Sources */,
+				3469EC8528C0904C006723DE /* StaticSuggestions.swift in Sources */,
 				34E2E27428B78BC900CB48FC /* UITraitCollection + ext.swift in Sources */,
 				34258C2328AF828800C1E131 /* KeyboardViewController.swift in Sources */,
 				34E2E27228B78BA600CB48FC /* UIButton + ext.swift in Sources */,

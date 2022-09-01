@@ -14,6 +14,9 @@ final class SuggestionCore {
     
     private var currentSessionSuggestions = [String: Int]()
     
+    private var suggestionsForTheFirstLetter = [String]()
+    private var firstLetter: String?
+    
     deinit {
         saveLocalData()
     }
@@ -30,9 +33,31 @@ final class SuggestionCore {
     }
 
     func provideSuggestions(for word: String) -> [String] {
-        let allSuggestions = allSuggestions.filter { $0.key.contains(word) && $0.value >= 3 }.sorted { $0.value > $1.value }
+        getSuggestionsForFirstLetter(in: word)
         
-        return  Array(allSuggestions.prefix(3).map { $0.key } )
+        let personalizedSuggestions = allSuggestions.filter { $0.key.contains(word) && $0.value >= 3 }.sorted { $0.value > $1.value }
+        let generalSuggestions = suggestionsForTheFirstLetter.filter { $0.contains(word) }
+        
+        var returnSuggestions = [String]()
+        
+        returnSuggestions.append(contentsOf: Array(personalizedSuggestions.prefix(3).map { $0.key }))
+        
+        let numberOfSuggestions = returnSuggestions.count
+        
+        guard numberOfSuggestions < 3 else { return returnSuggestions }
+        
+        returnSuggestions.append(contentsOf: Array(generalSuggestions.prefix(3 - numberOfSuggestions)))
+        
+        return returnSuggestions
+    }
+    
+    private func getLocalSuggestions(for word: String) {
+        
+    }
+    
+    private func getSuggestionsForFirstLetter(in word: String) {
+        guard let firstChar = word.first, firstLetter != String(firstChar) else { return }
+        suggestionsForTheFirstLetter = staticSuggestions.filter { $0.first == firstChar }
     }
     
     func wordTyped(word: String) {

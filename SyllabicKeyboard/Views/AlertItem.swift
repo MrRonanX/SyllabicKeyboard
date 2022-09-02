@@ -34,6 +34,6 @@ enum AlertContext {
     }
     
     static func successfulDeletionAlert(for language: Localization) -> AlertItem {
-        AlertItem(title: Text(language.successfulDeletionTitle), message: nil, primaryButton: .default(Text(language.alertOKButton)), secondaryButton: nil)
+        AlertItem(title: Text(language.successfulDeletionTitle), message: nil, primaryButton: .default(Text("OK")), secondaryButton: nil)
     }
 }

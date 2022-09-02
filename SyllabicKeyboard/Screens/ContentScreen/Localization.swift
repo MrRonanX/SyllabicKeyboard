@@ -140,9 +140,9 @@ enum Localization {
     
     var alertTitle: String {
         switch self {
-        case .inuit:    return ""
+        case .inuit:    return "ᐊᖏᕐᓯᒪᐅᑎᓐᓂᐅᕕᑦ ᑭᖕᖒᒪᑦᓯᔪᒍ"
         case .english:  return "We need your consent"
-        case .french:   return ""
+        case .french:   return "Nous avons besoin de votre consentement"
         }
     }
     
@@ -218,4 +218,6 @@ enum Localization {
         }
     }
 }
+
+
 

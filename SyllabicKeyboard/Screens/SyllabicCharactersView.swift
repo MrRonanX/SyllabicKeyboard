@@ -15,17 +15,17 @@ struct SyllabicCharactersView: View {
     var body: some View {
         HStack(alignment: .top) {
             ForEach(columns) { row in
-                VStack(spacing: 9) {
+                VStack(spacing: spacing) {
                     ForEach(row.characters, id:\.self) { character in
                         Text(character)
-                            .font(Font.custom("Ilisarniq-Demi", size: 22))
+                            .font(Font.custom("Ilisarniq-Demi", size: fontSize))
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(row.color)
             }
         }
-        
+        .padding(.horizontal, sidePadding)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -33,6 +33,18 @@ struct SyllabicCharactersView: View {
                 backButton
             }
         }
+    }
+    
+    var fontSize: CGFloat {
+        DeviceTypes.isiPad ? 42 : 22
+    }
+    
+    var sidePadding: CGFloat {
+        DeviceTypes.isiPad ? 70 : 0
+    }
+    
+    var spacing: CGFloat {
+        DeviceTypes.largeIpad ? 12 : 9
     }
     
     var backButton: some View {

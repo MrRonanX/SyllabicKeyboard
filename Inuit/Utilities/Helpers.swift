@@ -26,6 +26,10 @@ enum DeviceTypes {
     static var olderIphone: Bool {
         isiPhone8Standard || isiPhone8PlusStandard
     }
+    
+    static var largeIpad: Bool {
+        return isiPad && UIScreen.main.fixedCoordinateSpace.bounds.height > 1170
+    }
 }
 
 enum SpecialCharacters {

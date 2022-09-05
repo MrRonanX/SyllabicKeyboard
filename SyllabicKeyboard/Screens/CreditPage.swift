@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreditPage: View {
-    
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: ContentView.ViewModel
     
     var body: some View {
@@ -24,8 +24,27 @@ struct CreditPage: View {
             
             WebView(urlString: viewModel.selectedLanguage.wikiURL)
         }
+        .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.selectedLanguage.credit)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+        }
+    }
+    
+    var backButton: some View {
+        Button(action: dismissView, label: {
+            HStack {
+                Image(systemName: "chevron.left").font(.headline)
+                Text(viewModel.selectedLanguage.backButtonTitle)
+            }
+        })
+    }
+    
+    private func dismissView() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SyllabicCharactersView: View {
-    
+    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel: ContentView.ViewModel
     @State var columns = SpecialCharacters.inuitCharacters
     
     var body: some View {
@@ -25,13 +26,31 @@ struct SyllabicCharactersView: View {
             }
         }
         
-        
+        .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+        }
+    }
+    
+    var backButton: some View {
+        Button(action: dismissView, label: {
+            HStack {
+                Image(systemName: "chevron.left").font(.headline)
+                Text(viewModel.selectedLanguage.backButtonTitle)
+            }
+        })
+    }
+    
+    private func dismissView() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
 struct SyllabicCharactersView_Previews: PreviewProvider {
     static var previews: some View {
-        SyllabicCharactersView()
+        SyllabicCharactersView(viewModel: .init())
     }
 }

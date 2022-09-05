@@ -88,6 +88,14 @@ enum Localization {
         }
     }
     
+    var backButtonTitle: String {
+        switch self {
+        case .inuit:    return "ᐅᑎᒧᑦ"
+        case .english:  return "Back"
+        case .french:   return "Retour"
+        }
+    }
+    
     var credit: String {
         switch self {
         case .inuit:    return "ᓄᐃᑎᓯᒪᔪᑦ"

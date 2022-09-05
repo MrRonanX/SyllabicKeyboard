@@ -16,6 +16,7 @@
 		34258C2E28AF851C00C1E131 /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2C28AF839900C1E131 /* KeyboardButton.swift */; };
 		34258C3028AF957F00C1E131 /* KeyboardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2F28AF957F00C1E131 /* KeyboardType.swift */; };
 		34258C3128AFAD5A00C1E131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34258C1228AF81F800C1E131 /* Assets.xcassets */; };
+		3436C00F28C590FB00873BBA /* UINavigationController + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3436C00E28C590FB00873BBA /* UINavigationController + ext.swift */; };
 		3469EC7628BF28F7006723DE /* AlertItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7528BF28F7006723DE /* AlertItem.swift */; };
 		3469EC7828BF2FBA006723DE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7728BF2FBA006723DE /* Keys.swift */; };
 		3469EC7928BF2FC4006723DE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC7728BF2FBA006723DE /* Keys.swift */; };
@@ -84,6 +85,7 @@
 		34258C2428AF828800C1E131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34258C2C28AF839900C1E131 /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
 		34258C2F28AF957F00C1E131 /* KeyboardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardType.swift; sourceTree = "<group>"; };
+		3436C00E28C590FB00873BBA /* UINavigationController + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + ext.swift"; sourceTree = "<group>"; };
 		3469EC7528BF28F7006723DE /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		3469EC7728BF2FBA006723DE /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsPersistenceManager.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				34E2E30728BD349400CB48FC /* String + ext.swift */,
+				3436C00E28C590FB00873BBA /* UINavigationController + ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				34258C1128AF81F800C1E131 /* ContentView.swift in Sources */,
 				34E2E30428BCD3BA00CB48FC /* WebView.swift in Sources */,
 				3469EC7928BF2FC4006723DE /* Keys.swift in Sources */,
+				3436C00F28C590FB00873BBA /* UINavigationController + ext.swift in Sources */,
 				34E2E27A28B7E3E900CB48FC /* Localization.swift in Sources */,
 				34E2E2FF28BB53D900CB48FC /* UILabel + ext.swift in Sources */,
 				34E2E27C28B7E40600CB48FC /* ContentViewModel.swift in Sources */,

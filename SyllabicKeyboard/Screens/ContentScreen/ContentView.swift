@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @StateObject var viewModel = ViewModel()
     
     var body: some View {
@@ -24,7 +23,7 @@ struct ContentView: View {
                 VStack {
                     Spacer()
                     ButtonsView(viewModel: viewModel)
-                    NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView() }, label: { EmptyView() })
+                    NavigationLink(isActive: $viewModel.navigationActive, destination: { SyllabicCharactersView(viewModel: viewModel) }, label: { EmptyView() })
                 }
             }
             .onAppear(perform: viewModel.setInitialValue)

@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: alignment) {
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: spacing) {
                     mainTitle
                     installationInstructions
                     suggestionsSwitch
@@ -59,10 +59,13 @@ struct ContentView: View {
     }
     
     var installationInstructions: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: spacing) {
             Text(viewModel.selectedLanguage.installationTitle)
                 .font(viewModel.font)
                 .foregroundColor(.blue)
+                .lineLimit(1)
+                .minimumScaleFactor(0.9)
+                .frame(maxWidth: .infinity, alignment: .center)
             
             Text(viewModel.selectedLanguage.settingsTitle)
                 .font(viewModel.generalSizeFont)
@@ -72,7 +75,7 @@ struct ContentView: View {
                     Text(viewModel.selectedLanguage.goToTitle)
                 }
                 
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: smallSpacing) {
                     Text("  ")
                     Text(viewModel.selectedLanguage.generalTitle)
                     Text(viewModel.selectedLanguage.keyboardTitle)
@@ -91,7 +94,7 @@ struct ContentView: View {
     
     var suggestionsSwitch: some View {
         HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 15) {
+            VStack(alignment: .leading, spacing: spacing) {
                 Text(viewModel.selectedLanguage.toggleTitle)
                 if viewModel.dictionaryHasSuggestions {
                     Button(viewModel.selectedLanguage.deleteButtonTitle, action: viewModel.deleteButtonTapped)
@@ -126,6 +129,7 @@ fileprivate struct ButtonsView: View {
                 LanguageButton(title: "Français", color: frenchColor, action: viewModel.frenchSelected)
                     .font(.headline)
             }
+            
         }
     }
     
@@ -158,6 +162,8 @@ fileprivate struct LanguageButton: View {
         Button(action: action) {
             Text(title)
                 .foregroundColor(textColor)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
                 .frame(maxWidth: .infinity)
                 .padding()
             

@@ -12,8 +12,8 @@ struct CreditPage: View {
     @ObservedObject var viewModel: ContentView.ViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            VStack(alignment: .leading, spacing: 20 ) {
+        VStack(alignment: .leading, spacing: spacing) {
+            VStack(alignment: .leading, spacing: spacing) {
                 Text(viewModel.selectedLanguage.founded)
                 Text(viewModel.selectedLanguage.designed)
                 Text(viewModel.selectedLanguage.programmed)

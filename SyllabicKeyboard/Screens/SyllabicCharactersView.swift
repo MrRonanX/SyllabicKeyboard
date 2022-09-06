@@ -44,7 +44,7 @@ struct SyllabicCharactersView: View {
     }
     
     var spacing: CGFloat {
-        DeviceTypes.largeIpad ? 12 : 9
+        DeviceTypes.largeIpad ? 12 :  DeviceTypes.isIpod ? 5 : 9
     }
     
     var backButton: some View {

@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     var spacing: CGFloat {
-        DeviceTypes.isIpod ? 10 : 20
+        DeviceTypes.isIpod ? 10 : 30
     }
     
     var smallSpacing: CGFloat {

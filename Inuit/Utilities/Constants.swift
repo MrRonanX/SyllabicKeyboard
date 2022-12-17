@@ -13,11 +13,18 @@ enum Images {
     static let arrowUp      = UIImage(systemName: "arrowtriangle.up.fill")
     static let arrowLeft    = UIImage(systemName: "arrowtriangle.left.fill")
     static let arrowRight   = UIImage(systemName: "arrowtriangle.right.fill")
-    static let backspace    = UIImage(systemName: "delete.backward")
     static let world        = UIImage(systemName: "globe")
     static let forward      = UIImage(named: "Asset 38")
     static let backwards    = UIImage(named: "Asset 39")
     static let logo         = UIImage(named: "logoNoBackground")
+
+    static var backspace: UIImage? {
+        if #available(iOS 15, *) {
+            return .init(systemName: "delete.backward")
+        } else {
+            return UIImage(named: "delete.backward")
+        }
+    }
 }
 
 

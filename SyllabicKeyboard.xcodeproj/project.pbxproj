@@ -12,7 +12,7 @@
 		34258C1328AF81F800C1E131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34258C1228AF81F800C1E131 /* Assets.xcassets */; };
 		34258C1628AF81F800C1E131 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34258C1528AF81F800C1E131 /* Preview Assets.xcassets */; };
 		34258C2328AF828800C1E131 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2228AF828800C1E131 /* KeyboardViewController.swift */; };
-		34258C2728AF828800C1E131 /* Inuit.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 34258C2028AF828800C1E131 /* Inuit.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		34258C2728AF828800C1E131 /* Inuit.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 34258C2028AF828800C1E131 /* Inuit.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		34258C2E28AF851C00C1E131 /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2C28AF839900C1E131 /* KeyboardButton.swift */; };
 		34258C3028AF957F00C1E131 /* KeyboardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C2F28AF957F00C1E131 /* KeyboardType.swift */; };
 		34258C3128AFAD5A00C1E131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34258C1228AF81F800C1E131 /* Assets.xcassets */; };
@@ -23,6 +23,7 @@
 		3469EC8328BFA8EF006723DE /* SuggestionsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */; };
 		3469EC8528C0904C006723DE /* StaticSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469EC8428C0904C006723DE /* StaticSuggestions.swift */; };
 		346C104128BE0C4F00866D0B /* Date + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346C104028BE0C4F00866D0B /* Date + ext.swift */; };
+		3491C50A294E0C760090DAB8 /* UIGestureRecognizer + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3491C509294E0C760090DAB8 /* UIGestureRecognizer + ext.swift */; };
 		3491F25128C7023B0020DA0A /* View + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3491F25028C7023B0020DA0A /* View + ext.swift */; };
 		34E2E26228B4B41900CB48FC /* SpecialButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */; };
 		34E2E26428B4B56700CB48FC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2E26328B4B56700CB48FC /* Constants.swift */; };
@@ -62,15 +63,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		34258C2B28AF828800C1E131 /* Embed App Extensions */ = {
+		34258C2B28AF828800C1E131 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				34258C2728AF828800C1E131 /* Inuit.appex in Embed App Extensions */,
+				34258C2728AF828800C1E131 /* Inuit.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -92,6 +93,7 @@
 		3469EC8228BFA8EF006723DE /* SuggestionsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsPersistenceManager.swift; sourceTree = "<group>"; };
 		3469EC8428C0904C006723DE /* StaticSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSuggestions.swift; sourceTree = "<group>"; };
 		346C104028BE0C4F00866D0B /* Date + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + ext.swift"; sourceTree = "<group>"; };
+		3491C509294E0C760090DAB8 /* UIGestureRecognizer + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer + ext.swift"; sourceTree = "<group>"; };
 		3491F25028C7023B0020DA0A /* View + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + ext.swift"; sourceTree = "<group>"; };
 		34E2E26128B4B41900CB48FC /* SpecialButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialButtonType.swift; sourceTree = "<group>"; };
 		34E2E26328B4B56700CB48FC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				34E2E27328B78BC900CB48FC /* UITraitCollection + ext.swift */,
 				34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */,
 				346C104028BE0C4F00866D0B /* Date + ext.swift */,
+				3491C509294E0C760090DAB8 /* UIGestureRecognizer + ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,7 +309,7 @@
 				34258C0728AF81F800C1E131 /* Sources */,
 				34258C0828AF81F800C1E131 /* Frameworks */,
 				34258C0928AF81F800C1E131 /* Resources */,
-				34258C2B28AF828800C1E131 /* Embed App Extensions */,
+				34258C2B28AF828800C1E131 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -343,7 +346,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					34258C0A28AF81F800C1E131 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -428,6 +431,7 @@
 				34E2E26E28B78B5500CB48FC /* UIInputView + ext.swift in Sources */,
 				3469EC8328BFA8EF006723DE /* SuggestionsPersistenceManager.swift in Sources */,
 				34E2E26828B524B200CB48FC /* Helpers.swift in Sources */,
+				3491C50A294E0C760090DAB8 /* UIGestureRecognizer + ext.swift in Sources */,
 				3469EC7828BF2FBA006723DE /* Keys.swift in Sources */,
 				34E2E31328BDF93A00CB48FC /* KeyboardRowView.swift in Sources */,
 				34258C2E28AF851C00C1E131 /* KeyboardButton.swift in Sources */,

@@ -8,9 +8,9 @@
 import UIKit
 
 extension UILabel {
-    func setAttributedTitle(with title: String, color: UIColor) {
+    func setAttributedTitle(with title: String, color: UIColor, fontSize: CGFloat = 25.0) {
         let attributes = [
-            NSAttributedString.Key.font: UIFont(name: "Ilisarniq-Demi", size: 25.0)!,
+            NSAttributedString.Key.font: UIFont(name: "Ilisarniq-Demi", size: fontSize)!,
             NSAttributedString.Key.foregroundColor: color
             ]
         let string = NSAttributedString(string: title, attributes: attributes)

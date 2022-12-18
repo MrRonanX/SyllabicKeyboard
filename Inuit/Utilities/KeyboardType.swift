@@ -7,6 +7,12 @@
 
 import UIKit
 
+extension String {
+    var companionCharacter: String {
+        companionsPool[self] ?? ""
+    }
+}
+
 enum KeyboardType {
     case sectionOne, sectionTwo, sectionThree, sectionFour, numericSection
     
@@ -32,7 +38,7 @@ enum KeyboardType {
     
     var thirdRowKeys: [String] {
         let genericThirdRow = [".", ",", "?", "!", ";", ":"]
-        let sectionFourRow = ["ᖠ", "ᖢ", "ᖤ", ".", ",", "?"]
+        let sectionFourRow = [".", ",", "?", "ᖠ", "ᖢ", "ᖤ",]
         return self == .sectionFour ? sectionFourRow : genericThirdRow
     }
     
@@ -61,7 +67,7 @@ enum KeyboardType {
         case .sectionOne:       return ["🙂", "🙁", "😢", "😍", "😘", "🤣"]
         case .sectionTwo:       return thirdRowKeys
         case .sectionThree:     return thirdRowKeys
-        case .sectionFour:      return ["ᖡ", "ᖣ", "ᖥ", ".", ",", "?",]
+        case .sectionFour:      return [".", ",", "?", "ᖡ", "ᖣ", "ᖥ"]
         case .numericSection:   return ["_", "^", "\\", "√", "π", "@"]
         }
     }

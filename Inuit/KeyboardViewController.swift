@@ -339,6 +339,8 @@ final class KeyboardViewController: UIInputViewController {
             button.addTarget(self, action: #selector(dragIn), for: .touchDragInside)
         }
 
+        guard !title.companionCharacter.isEmpty, !isIpad else { return button }
+
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(buttonLongTapped))
         longPressGesture.minimumPressDuration       = 0.5
         longPressGesture.numberOfTouchesRequired    = 1
@@ -352,69 +354,70 @@ final class KeyboardViewController: UIInputViewController {
     @objc private func buttonLongTapped(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             tappedButton?.removeFromSuperview()
-
-            guard let sender = gesture.view as? KeyboardButton,
-                    let title = sender.titleLabel?.text,
-                    inuktitutCharacter(title) else { return }
-
-            let popUpColor = selectedKeyboardType.backgroundColor
-            let multiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
-
-            let expectedWidth = buttonWidth * 3
-            let sideExpansion = expectedWidth / 6
-
-            let tapLocation = gesture.location(in: view)
-            let direction: LongTapPopUp.Direction = tapLocation.x > view.frame.midX + buttonWidth / 2 ? .left : .right
-            let popUpView = LongTapPopUp(direction: direction, color: popUpColor, originalWidth: buttonWidth)
-    //        popUpView.label.setAttributedTitle(with: sender.titleLabel?.text ?? "", color: sender.titleLabel?.textColor ?? .orange)
-            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-            tappedButton = popUpView
-            view.addSubview(popUpView)
-
-            popUpView.translatesAutoresizingMaskIntoConstraints = false
-
-            let horizontalConstraint: NSLayoutConstraint
-            if direction == .left {
-                horizontalConstraint = popUpView.trailingAnchor.constraint(equalTo: sender.trailingAnchor, constant: sideExpansion)
-            } else {
-                horizontalConstraint = popUpView.leadingAnchor.constraint(equalTo: sender.leadingAnchor, constant: -sideExpansion)
-            }
-
-            NSLayoutConstraint.activate([
-                popUpView.bottomAnchor.constraint(equalTo: sender.bottomAnchor),
-                horizontalConstraint,
-                popUpView.widthAnchor.constraint(equalTo: sender.widthAnchor, multiplier: 3.0),
-                popUpView.heightAnchor.constraint(equalTo: sender.widthAnchor, multiplier: multiplier)
-            ])
+            createLongTapView(from: gesture)
         }
 
         if gesture.state == .ended {
-            guard let tappedButton = tappedButton as? LongTapPopUp, !tappedButton.selectedCharacter.isEmpty else { return }
+            let keyButton = gesture.view as? KeyboardButton
+            keyButton?.isHighlighted = false
+            tappedButton?.removeFromSuperview()
+
+            guard let tappedButton = tappedButton as? LongTappable, !tappedButton.selectedCharacter.isEmpty else { return }
             handleTappedCharacter(char: tappedButton.selectedCharacter)
         }
 
         if gesture.state == .changed {
             let tapLocation = gesture.location(in: view)
-            guard let tappedButton = tappedButton as? LongTapPopUp else { return }
+            guard let tappedButton = tappedButton as? LongTappable else { return }
             if tappedButton.largerFrame.contains(tapLocation) {
                 tappedButton.handleSelection(for: gesture)
             } else {
                 gesture.cancel()
                 tappedButton.removeFromSuperview()
+                let keyButton = gesture.view as? KeyboardButton
+                keyButton?.isHighlighted = false
             }
         }
     }
 
+    private func createLongTapView(from gesture: UILongPressGestureRecognizer) {
+        guard let keyButton = gesture.view as? KeyboardButton,
+                let char = keyButton.titleLabel?.text,
+                inuktitutCharacter(char),
+                !char.companionCharacter.isEmpty else { return }
 
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-        let lastTouch = touches.first
-        if lastTouch?.view is LongTapPopUp {
-            print("YES")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) { [weak keyButton] in
+            keyButton?.isHighlighted = true
         }
+
+        let popUpColor = selectedKeyboardType.backgroundColor
+        let tapLocation = gesture.location(in: view)
+        let direction: Direction = tapLocation.x > view.frame.midX + buttonWidth / 2 ? .left : .right
+
+        let popUpView = LongTapPopUp(direction: direction, color: popUpColor, originalWidth: buttonWidth)
+        popUpView.setLabels(title1: char, title2: char.companionCharacter)
+        view.addSubview(popUpView)
+        tappedButton = popUpView
+        popUpView.translatesAutoresizingMaskIntoConstraints = false
+
+        let multiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
+        let expectedWidth = buttonWidth * 3
+        let sideExpansion = expectedWidth / 6
+
+        let horizontalConstraint: NSLayoutConstraint
+        if direction == .left {
+            horizontalConstraint = popUpView.trailingAnchor.constraint(equalTo: keyButton.trailingAnchor, constant: sideExpansion)
+        } else {
+            horizontalConstraint = popUpView.leadingAnchor.constraint(equalTo: keyButton.leadingAnchor, constant: -sideExpansion)
+        }
+
+        NSLayoutConstraint.activate([
+            popUpView.bottomAnchor.constraint(equalTo: keyButton.bottomAnchor),
+            horizontalConstraint,
+            popUpView.widthAnchor.constraint(equalTo: keyButton.widthAnchor, multiplier: 3.0),
+            popUpView.heightAnchor.constraint(equalTo: keyButton.widthAnchor, multiplier: multiplier)
+        ])
     }
-
-
     
     private func createAccessoryButton(type: SpecialButtonType) -> KeyboardButton {
         let button = KeyboardButton(type: .system)

@@ -18,7 +18,7 @@ protocol LongTappable: UIView {
     func handleSelection(for gesture: UILongPressGestureRecognizer)
 }
 
-final class LongTapPopUp: UIView, LongTappable{
+final class LongTapPopUp: UIView, LongTappable {
 
     var direction: Direction
     var popUpColor: UIColor
@@ -111,7 +111,8 @@ final class LongTapPopUp: UIView, LongTappable{
         guard let view, let text = view.text else { return }
         selectedCharacter = text
 
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
     }
 }
 
@@ -123,9 +124,14 @@ enum Direction {
         return self == .right ? drawToRight(in: rect) : drawToLeft(in: rect)
     }
 
+    private var isLandscape: Bool {
+        let size: CGSize = UIScreen.main.bounds.size
+        return size.width / size.height > 1
+    }
+
     private func drawToRight(in rect: CGRect) -> UIBezierPath {
         let rowSpacer = rect.height / 11
-        let sideExpansion = rect.width / 6
+        let sideExpansion = rect.width / (isLandscape ? 8 : 6)
         let upperRadius = (rect.width / 12) + 4
         let upperWidth = rect.width - 2 * upperRadius
         let bottomWidth = rect.width / 2 - 2 * upperRadius
@@ -209,7 +215,7 @@ enum Direction {
 
     private func drawToLeft(in rect: CGRect) -> UIBezierPath {
         let rowSpacer = rect.height / 11
-        let sideExpansion = rect.width / 6
+        let sideExpansion = rect.width / (isLandscape ? 8 : 6)
         let upperRadius = (rect.width / 12) + 4
         let upperWidth = rect.width - 2 * upperRadius
         let bottomWidth = rect.width / 2 - 2 * upperRadius
@@ -254,28 +260,28 @@ enum Direction {
         point.y = rect.maxY - upperRadius
         path.addLine(to: point)
 
-        // Bottom Right Arc
+        // Bottom Right Corner
         point.x = rect.maxX - sideExpansion - upperRadius
         path.addArc(withCenter: point, radius: upperRadius, startAngle: 4.0 * .pi / 2.0, endAngle: 1.0 * .pi / 2.0, clockwise: true)
 
-        // Bottom Left Arch
-        point.x = rect.maxX - bottomWidth - sideRadius * 2
+        // Bottom Left Corner
+        point.x = rect.maxX - bottomWidth - sideRadius * 2.5
         point.y = rect.maxY - upperRadius
 
         path.addArc(withCenter: point, radius: upperRadius, startAngle: 1.0 * .pi / 2.0, endAngle: 2.0 * .pi / 2.0, clockwise: true)
 
         // Bottom to Middle Left
         point.x = point.x - upperRadius
-        point.y = controlHeight + upperRadius + upperRadius / 2
+        point.y = controlHeight + upperRadius / 1.1
         path.addLine(to: point)
 
         // Middle Left Corner
-        point.x = point.x - upperRadius
-        path.addArc(withCenter: point, radius: upperRadius, startAngle: 2.0 * .pi, endAngle: 3.0 * .pi / 2.0, clockwise: false)
+        point.x = point.x - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi, endAngle: 3.0 * .pi / 2.0, clockwise: false)
 
         // Middle Left to Left Side
         point.x = rect.minX + upperRadius
-        point.y = point.y - upperRadius
+        point.y = point.y - sideRadius
         path.addLine(to: point)
 
         // Left Corner

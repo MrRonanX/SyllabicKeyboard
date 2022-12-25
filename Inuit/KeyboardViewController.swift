@@ -339,7 +339,7 @@ final class KeyboardViewController: UIInputViewController {
             button.addTarget(self, action: #selector(dragIn), for: .touchDragInside)
         }
 
-        guard !title.companionCharacter.isEmpty, !isIpad else { return button }
+        guard !title.companionCharacter.isEmpty else { return button }
 
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(buttonLongTapped))
         longPressGesture.minimumPressDuration       = 0.5
@@ -400,9 +400,13 @@ final class KeyboardViewController: UIInputViewController {
         tappedButton = popUpView
         popUpView.translatesAutoresizingMaskIntoConstraints = false
 
-        let multiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
-        let expectedWidth = buttonWidth * 3
-        let sideExpansion = expectedWidth / 6
+        let widthMultiplier = isLandscape ? 2.0 : 3.0
+        var heightMultiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
+        if isLandscape && DeviceTypes.olderIphone {
+            heightMultiplier -= 0.3
+        }
+        let expectedWidth = buttonWidth * widthMultiplier
+        let sideExpansion = expectedWidth / (isLandscape ? 13 : 6)
 
         let horizontalConstraint: NSLayoutConstraint
         if direction == .left {
@@ -411,11 +415,15 @@ final class KeyboardViewController: UIInputViewController {
             horizontalConstraint = popUpView.leadingAnchor.constraint(equalTo: keyButton.leadingAnchor, constant: -sideExpansion)
         }
 
+        let width = keyButton.frame.width
+        let height = keyButton.frame.height
+        let heightAnchor: NSLayoutDimension = width > height ? keyButton.heightAnchor : keyButton.widthAnchor
+
         NSLayoutConstraint.activate([
             popUpView.bottomAnchor.constraint(equalTo: keyButton.bottomAnchor),
             horizontalConstraint,
-            popUpView.widthAnchor.constraint(equalTo: keyButton.widthAnchor, multiplier: 3.0),
-            popUpView.heightAnchor.constraint(equalTo: keyButton.widthAnchor, multiplier: multiplier)
+            popUpView.widthAnchor.constraint(equalTo: keyButton.widthAnchor, multiplier: widthMultiplier),
+            popUpView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: isIpad ? 1.5 : heightMultiplier)
         ])
     }
     
@@ -498,7 +506,12 @@ final class KeyboardViewController: UIInputViewController {
         tappedButton?.removeFromSuperview()
 
         let popUpColor = hasColoredBackground(sender.titleLabel?.text ?? "") ? selectedKeyboardType.backgroundColor : .systemWhite
-        let multiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
+        var heightMultiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
+        if DeviceTypes.olderIphone && isLandscape {
+            heightMultiplier -= 0.3
+        }
+
+        let widthMultiplier = isLandscape ? 1.4 : 1.78
         
         let popUpView = KeyPopUp(frame: .zero, color: popUpColor)
         popUpView.label.setAttributedTitle(with: sender.titleLabel?.text ?? "", color: sender.titleLabel?.textColor ?? .orange)
@@ -506,12 +519,16 @@ final class KeyboardViewController: UIInputViewController {
         tappedButton = popUpView
         view.addSubview(popUpView)
         popUpView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        let width = sender.frame.width
+        let height = sender.frame.height
+        let heightAnchor: NSLayoutDimension = width > height ? sender.heightAnchor : sender.widthAnchor
+
         NSLayoutConstraint.activate([
             popUpView.bottomAnchor.constraint(equalTo: sender.bottomAnchor),
             popUpView.centerXAnchor.constraint(equalTo: sender.centerXAnchor),
-            popUpView.widthAnchor.constraint(equalTo: sender.widthAnchor, multiplier: 1.78),
-            popUpView.heightAnchor.constraint(equalTo: sender.widthAnchor, multiplier: multiplier)
+            popUpView.widthAnchor.constraint(equalTo: sender.widthAnchor, multiplier: widthMultiplier),
+            popUpView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightMultiplier)
         ])
     }
     

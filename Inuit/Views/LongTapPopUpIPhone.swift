@@ -10,7 +10,6 @@ import UIKit
 protocol LongTappable: UIView {
     var direction: Direction { get set }
     var popUpColor: UIColor { get set }
-    var originalButtonWidth: CGFloat { get set }
     var selectedCharacter: String { get set }
     var largerFrame: CGRect { get }
 
@@ -22,31 +21,49 @@ final class LongTapPopUp: UIView, LongTappable {
 
     var direction: Direction
     var popUpColor: UIColor
-    var originalButtonWidth: CGFloat
     var selectedCharacter = ""
     let stackView = UIStackView()
 
-    init(direction: Direction, color: UIColor, originalWidth: CGFloat) {
+    private let buttonShapeLayer = CALayer()
+
+    init(direction: Direction, color: UIColor) {
         self.direction = direction
         self.popUpColor = color
-        self.originalButtonWidth = originalWidth
         super.init(frame: .zero)
         backgroundColor = .clear
         setupStackView()
-        self.tag = 9999
+        buttonShapeLayer.backgroundColor = color.cgColor
+
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.25
+        layer.shadowOffset = CGSize(width: 0, height: 12)
+        layer.shadowRadius = 12
+        layer.addSublayer(buttonShapeLayer)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func draw(_ rect: CGRect) {
-        let path = direction.drawShape(in: rect)
+    private func updatePath() {
+        let path = direction.drawShape(in: bounds)
         popUpColor.set()
         UIColor.systemWhite.setStroke()
         path.fill()
         path.lineWidth = 1
         path.stroke()
+
+        buttonShapeLayer.frame = self.bounds
+
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+
+        buttonShapeLayer.mask = mask
+        bringSubviewToFront(stackView)
+    }
+
+    override func layoutSubviews() {
+        updatePath()
     }
 
     var largerFrame: CGRect {
@@ -56,6 +73,56 @@ final class LongTapPopUp: UIView, LongTappable {
             width: frame.width + 30,
             height: frame.height + 100
         )
+    }
+
+    func setIPadConstraints(for superView: KeyboardButton, and direction: Direction) {
+        let widthMultiplier = 2.0
+        let heightMultiplier = 1.6
+
+        let horizontalConstraint: NSLayoutConstraint
+        if direction == .left {
+            horizontalConstraint = self.trailingAnchor.constraint(equalTo: superView.trailingAnchor)
+        } else {
+            horizontalConstraint = self.leadingAnchor.constraint(equalTo: superView.leadingAnchor)
+        }
+
+        let width = superView.frame.width
+        let height = superView.frame.height
+        let heightAnchor: NSLayoutDimension = width > height ? superView.heightAnchor : superView.widthAnchor
+
+        NSLayoutConstraint.activate([
+            self.bottomAnchor.constraint(equalTo: superView.bottomAnchor),
+            horizontalConstraint,
+            self.widthAnchor.constraint(equalTo: superView.widthAnchor, multiplier: widthMultiplier),
+            self.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightMultiplier)
+        ])
+    }
+
+    func setIPhoneConstraint(for superView: KeyboardButton, and direction: Direction, and superViewWidth: CGFloat) {
+        let widthMultiplier = UIDevice.isLandscape ? 2.0 : 3.0
+        var heightMultiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
+        if UIDevice.isLandscape && DeviceTypes.olderIphone { heightMultiplier -= 0.3 }
+
+        let expectedWidth = superViewWidth * widthMultiplier
+        let sideExpansion = expectedWidth / (UIDevice.isLandscape ? 13 : 6)
+
+        let horizontalConstraint: NSLayoutConstraint
+        if direction == .left {
+            horizontalConstraint = self.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: sideExpansion)
+        } else {
+            horizontalConstraint = self.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: -sideExpansion)
+        }
+
+        let width = superView.frame.width
+        let height = superView.frame.height
+        let heightAnchor: NSLayoutDimension = width > height ? superView.heightAnchor : superView.widthAnchor
+
+        NSLayoutConstraint.activate([
+            self.bottomAnchor.constraint(equalTo: superView.bottomAnchor),
+            horizontalConstraint,
+            self.widthAnchor.constraint(equalTo: superView.widthAnchor, multiplier: widthMultiplier),
+            self.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightMultiplier)
+        ])
     }
 
     private func setupStackView() {
@@ -130,11 +197,18 @@ enum Direction {
     }
 
     private func drawToRight(in rect: CGRect) -> UIBezierPath {
+        return DeviceTypes.isiPad ? drawToRightIPad(in: rect) : drawToRightIPhone(in: rect)
+    }
+
+    private func drawToLeft(in rect: CGRect) -> UIBezierPath {
+        return DeviceTypes.isiPad ? drawToLeftIPad(in: rect) : drawToLeftIPhone(in: rect)
+    }
+
+    private func drawToRightIPhone(in rect: CGRect) -> UIBezierPath {
         let rowSpacer = rect.height / 11
         let sideExpansion = rect.width / (isLandscape ? 8 : 6)
         let upperRadius = (rect.width / 12) + 4
         let upperWidth = rect.width - 2 * upperRadius
-        let bottomWidth = rect.width / 2 - 2 * upperRadius
 
         let sideRadius = rect.height / 14
 
@@ -213,7 +287,7 @@ enum Direction {
         return path
     }
 
-    private func drawToLeft(in rect: CGRect) -> UIBezierPath {
+    private func drawToLeftIPhone(in rect: CGRect) -> UIBezierPath {
         let rowSpacer = rect.height / 11
         let sideExpansion = rect.width / (isLandscape ? 8 : 6)
         let upperRadius = (rect.width / 12) + 4
@@ -265,7 +339,7 @@ enum Direction {
         path.addArc(withCenter: point, radius: upperRadius, startAngle: 4.0 * .pi / 2.0, endAngle: 1.0 * .pi / 2.0, clockwise: true)
 
         // Bottom Left Corner
-        point.x = rect.maxX - bottomWidth - sideRadius * 2.5
+        point.x = rect.maxX - bottomWidth - sideRadius * 2
         point.y = rect.maxY - upperRadius
 
         path.addArc(withCenter: point, radius: upperRadius, startAngle: 1.0 * .pi / 2.0, endAngle: 2.0 * .pi / 2.0, clockwise: true)
@@ -297,6 +371,140 @@ enum Direction {
         point.x = rect.minX + upperRadius
         point.x = rect.minX + upperRadius
         path.addArc(withCenter: point, radius: upperRadius, startAngle: .pi, endAngle: 3.0 * .pi / 2.0, clockwise: true)
+
+        path.close()
+
+        return path
+    }
+
+    private func drawToRightIPad(in rect: CGRect) -> UIBezierPath {
+        let originalWidth = rect.width / 2
+
+        let sideRadius = rect.height / 14
+        let controlHeight = rect.midY
+        let upperWidth = rect.width - 2 * sideRadius
+
+        let path = UIBezierPath()
+        var point = rect.origin
+
+        // Top Left Corner
+        point.x = sideRadius
+        path.move(to: point)
+
+        // Top Right Side
+        point.x = upperWidth + sideRadius
+        path.addLine(to: point)
+
+        // Top Right Corner
+        point.y += sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 3.0 * .pi / 2.0, endAngle: 4.0 * .pi / 2.0, clockwise: true)
+
+        // Middle Right Side
+        point.x = rect.maxX
+        point.y = controlHeight - sideRadius / 2
+        path.addLine(to: point)
+
+        point.x = rect.maxX - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi, endAngle: .pi / 2.0, clockwise: true)
+
+        // Middle To Bottom
+        point.x = rect.minX + originalWidth + sideRadius
+        point.y = point.y + sideRadius
+        path.addLine(to: point)
+
+        point.y = point.y + sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 3.0 * .pi / 2.0, endAngle: .pi, clockwise: false)
+
+        // Bottom Right Corner
+        point.x = point.x - sideRadius
+        point.y = rect.maxY - sideRadius
+        path.addLine(to: point)
+
+        point.x = point.x - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi, endAngle: .pi / 2.0, clockwise: true)
+
+        // Bottom Left Corner
+        point.x = rect.minX + sideRadius
+        point.y = rect.maxY - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 1.0 * .pi / 2.0, endAngle: 2.0 * .pi / 2.0, clockwise: true)
+
+        // Middle Left corner
+        point.y = sideRadius
+        point.x = rect.minX
+        path.addLine(to: point)
+
+        point.x = sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi / 2.0, endAngle: 3.0 * .pi / 2.0, clockwise: true)
+
+        path.close()
+
+        return path
+    }
+
+    private func drawToLeftIPad(in rect: CGRect) -> UIBezierPath {
+        let originalWidth = rect.width / 2
+
+        let sideRadius = rect.height / 14
+        let controlHeight = rect.midY
+        let upperWidth = rect.width - 2 * sideRadius
+
+        let path = UIBezierPath()
+        var point = rect.origin
+
+        // Top Left Corner
+        point.x = sideRadius
+        path.move(to: point)
+
+        // Top Right Side
+        point.x = upperWidth + sideRadius
+        path.addLine(to: point)
+
+        // Top Right Corner
+        point.y += sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 3.0 * .pi / 2.0, endAngle: 4.0 * .pi / 2.0, clockwise: true)
+
+        // Right Side
+        point.x = rect.maxX
+        point.y = rect.maxY - sideRadius
+        path.addLine(to: point)
+
+        // Bottom Right Corner
+        point.x = rect.maxX - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi, endAngle: .pi / 2.0, clockwise: true)
+
+        // Bottom Side
+        point.x = rect.maxX - originalWidth + sideRadius
+        point.y = rect.maxY
+        path.addLine(to: point)
+
+        // Bottom Left Corner
+        point.y = rect.maxY - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 1.0 * .pi / 2.0, endAngle: 2.0 * .pi / 2.0, clockwise: true)
+
+        // Middle Left Side
+        point.y = controlHeight + sideRadius * 1.5
+        point.x = rect.maxX - originalWidth
+        path.addLine(to: point)
+
+        // Middle Left Corner
+        point.x = rect.maxX - originalWidth - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi, endAngle: 3.0 * .pi / 2.0, clockwise: false)
+
+        // Left Side and Corner
+        point.x = rect.minX + sideRadius
+        point.y = point.y - sideRadius
+        path.addLine(to: point)
+
+        point.y = point.y - sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 1.0 * .pi / 2.0, endAngle: 2.0 * .pi / 2.0, clockwise: true)
+
+
+        point.y = sideRadius
+        point.x = rect.minX
+        path.addLine(to: point)
+
+        point.x = sideRadius
+        path.addArc(withCenter: point, radius: sideRadius, startAngle: 2.0 * .pi / 2.0, endAngle: 3.0 * .pi / 2.0, clockwise: true)
 
         path.close()
 

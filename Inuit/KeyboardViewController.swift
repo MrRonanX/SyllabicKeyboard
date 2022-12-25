@@ -390,41 +390,18 @@ final class KeyboardViewController: UIInputViewController {
             keyButton?.isHighlighted = true
         }
 
-        let popUpColor = selectedKeyboardType.backgroundColor
+        let popUpColor = DeviceTypes.isiPad ? selectedKeyboardType.longTapBackgroundColor : selectedKeyboardType.backgroundColor
         let tapLocation = gesture.location(in: view)
         let direction: Direction = tapLocation.x > view.frame.midX + buttonWidth / 2 ? .left : .right
 
-        let popUpView = LongTapPopUp(direction: direction, color: popUpColor, originalWidth: buttonWidth)
+        let popUpView = LongTapPopUp(direction: direction, color: popUpColor)
         popUpView.setLabels(title1: char, title2: char.companionCharacter)
         view.addSubview(popUpView)
         tappedButton = popUpView
         popUpView.translatesAutoresizingMaskIntoConstraints = false
 
-        let widthMultiplier = isLandscape ? 2.0 : 3.0
-        var heightMultiplier = DeviceTypes.olderIphone ? 2.8 : 2.6
-        if isLandscape && DeviceTypes.olderIphone {
-            heightMultiplier -= 0.3
-        }
-        let expectedWidth = buttonWidth * widthMultiplier
-        let sideExpansion = expectedWidth / (isLandscape ? 13 : 6)
-
-        let horizontalConstraint: NSLayoutConstraint
-        if direction == .left {
-            horizontalConstraint = popUpView.trailingAnchor.constraint(equalTo: keyButton.trailingAnchor, constant: sideExpansion)
-        } else {
-            horizontalConstraint = popUpView.leadingAnchor.constraint(equalTo: keyButton.leadingAnchor, constant: -sideExpansion)
-        }
-
-        let width = keyButton.frame.width
-        let height = keyButton.frame.height
-        let heightAnchor: NSLayoutDimension = width > height ? keyButton.heightAnchor : keyButton.widthAnchor
-
-        NSLayoutConstraint.activate([
-            popUpView.bottomAnchor.constraint(equalTo: keyButton.bottomAnchor),
-            horizontalConstraint,
-            popUpView.widthAnchor.constraint(equalTo: keyButton.widthAnchor, multiplier: widthMultiplier),
-            popUpView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: isIpad ? 1.5 : heightMultiplier)
-        ])
+        DeviceTypes.isiPad ? popUpView.setIPadConstraints(for: keyButton, and: direction) :
+                             popUpView.setIPhoneConstraint(for: keyButton, and: direction, and: buttonWidth)
     }
     
     private func createAccessoryButton(type: SpecialButtonType) -> KeyboardButton {

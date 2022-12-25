@@ -100,6 +100,16 @@ enum KeyboardType {
         case .numericSection:   return .appYellow
         }
     }
+
+    var longTapBackgroundColor: UIColor {
+        switch self {
+        case .sectionOne:       return .systemBlack
+        case .sectionTwo:       return .longTapPopupBlue
+        case .sectionThree:     return .longTapPopupOrange
+        case .sectionFour:      return .longTapPopupGreen
+        case .numericSection:   return .appYellow
+        }
+    }
     
     var foregroundColor: UIColor {
         if self == .numericSection { return .black }

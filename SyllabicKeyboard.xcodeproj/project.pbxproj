@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		34248236294EF03E00D41DDE /* LongTapPopUpIPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34248235294EF03E00D41DDE /* LongTapPopUpIPhone.swift */; };
+		34248238295885B700D41DDE /* UIDevice + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34248237295885B700D41DDE /* UIDevice + ext.swift */; };
 		34258C0F28AF81F800C1E131 /* SyllabicKeyboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C0E28AF81F800C1E131 /* SyllabicKeyboardApp.swift */; };
 		34258C1128AF81F800C1E131 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34258C1028AF81F800C1E131 /* ContentView.swift */; };
 		34258C1328AF81F800C1E131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34258C1228AF81F800C1E131 /* Assets.xcassets */; };
@@ -79,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		34248235294EF03E00D41DDE /* LongTapPopUpIPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTapPopUpIPhone.swift; sourceTree = "<group>"; };
+		34248237295885B700D41DDE /* UIDevice + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice + ext.swift"; sourceTree = "<group>"; };
 		34258C0B28AF81F800C1E131 /* SyllabicKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SyllabicKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34258C0E28AF81F800C1E131 /* SyllabicKeyboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabicKeyboardApp.swift; sourceTree = "<group>"; };
 		34258C1028AF81F800C1E131 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				34E2E27328B78BC900CB48FC /* UITraitCollection + ext.swift */,
 				34E2E2FE28BB53D900CB48FC /* UILabel + ext.swift */,
 				346C104028BE0C4F00866D0B /* Date + ext.swift */,
+				34248237295885B700D41DDE /* UIDevice + ext.swift */,
 				3491C509294E0C760090DAB8 /* UIGestureRecognizer + ext.swift */,
 			);
 			path = Extensions;
@@ -428,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34E2E26428B4B56700CB48FC /* Constants.swift in Sources */,
+				34248238295885B700D41DDE /* UIDevice + ext.swift in Sources */,
 				346C104128BE0C4F00866D0B /* Date + ext.swift in Sources */,
 				34E2E26C28B78B4000CB48FC /* UIScreen + ext.swift in Sources */,
 				34248236294EF03E00D41DDE /* LongTapPopUpIPhone.swift in Sources */,

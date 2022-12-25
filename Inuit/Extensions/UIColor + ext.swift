@@ -69,6 +69,10 @@ extension UIColor {
             }
         }
     }()
+
+    static var longTapPopupBlue: UIColor = {
+        return colorFromHexValue("1a7da9")
+    }()
     
     static var appOrange: UIColor = {
         return UIColor { traitCollection -> UIColor in
@@ -79,6 +83,10 @@ extension UIColor {
             }
         }
     }()
+
+    static var longTapPopupOrange: UIColor = {
+        return colorFromHexValue("cd5a21")
+    }()
     
     static var appGreen: UIColor = {
         return UIColor { traitCollection -> UIColor in
@@ -88,6 +96,10 @@ extension UIColor {
                 return colorFromHexValue("85c441")
             }
         }
+    }()
+
+    static var longTapPopupGreen: UIColor = {
+        return colorFromHexValue("5ca623")
     }()
     
     static var appYellow: UIColor = {
